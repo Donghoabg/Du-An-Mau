@@ -14,16 +14,34 @@ class Controller {
     }
 
     public function ControllerRegister() {
-        include 'Views/Register.php';
-        if (isset($_POST['username']) && isset($_POST['password'])) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $register = new Database();
-            $register->RegisterModel($username, $password);
-            header('Location: index.php?page=login');
+    $error = "";
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $username = trim($_POST["username"]);
+        $password = $_POST["password"];
+        $confirm = $_POST["confirm_password"];
+        $db = new Database();
+
+        // Kiểm tra điều kiện đầu vào
+        if (!preg_match("/[a-zA-Z]/", $username)) {
+            $error = "Tên phải có ít nhất 1 chữ cái.";
+        } elseif (strlen($password) < 4) {
+            $error = "Mật khẩu phải có ít nhất 4 ký tự.";
+        } elseif ($password !== $confirm) {
+            $error = "Mật khẩu nhập lại không khớp.";
+        } elseif ($db->CheckUserExists($username)) {
+            $error = "Tài khoản đã tồn tại.";
+        } else {
+            $db->RegisterModel($username, $password);
+            header("Location: index.php?page=login");
+            exit;
         }
-        echo "Thất bại";
     }
+
+    include 'Views/Register.php';
+    }
+
+
 
     public function ControllerLogin() {
         include 'Views/Login.php';

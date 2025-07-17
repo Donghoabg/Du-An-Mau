@@ -15,12 +15,19 @@ class Database{
             }
     }
     public function RegisterModel($username, $password){
-        $sql = "INSERT INTO user (username, `password`) VALUES (:username, :password)";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(":username", $username);
-        $stmt->bindParam(":password", $password);
-        return $stmt->execute();
+    $sql = "INSERT INTO user (username, `password`) VALUES (:username, :password)";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindParam(":username", $username);
+    $stmt->bindParam(":password", $password);
+    return $stmt->execute();
     }
+
+    public function CheckUserExists($username) {
+        $stmt = $this->pdo->prepare("SELECT * FROM user WHERE username = ?");
+        $stmt->execute([$username]);
+        return $stmt->rowCount() > 0;
+    }
+
     public function LoginModel($username, $password){
         $sql = "SELECT * FROM user WHERE username = :username AND password = :password";
         $stmt= $this->pdo->prepare($sql);

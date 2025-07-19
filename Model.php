@@ -44,122 +44,67 @@ class Database{
         }
 
     }
-    public function ListProduct($page, $limit){
-        $start = ($page - 1) * $limit;
-        $sql = "SELECT * FROM mobilehome LIMIT $start, $limit";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    public function TotalProduct(){
-        $sql = "SELECT count(*) as count FROM mobilehome";
-        $stmt = $this->pdo->query($sql);
-        return (int)$stmt->fetchColumn();
-    }
+    
     public function ProductsSaleModel(){
         $sql = "SELECT * FROM sale";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function ProductNew(){
-        $sql = "SELECT * FROM vuacohang";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }   
-
-
-
-    public function getFilteredProducts($brand, $min, $max, $offset, $limit) {
-        $sql = "SELECT * FROM mobilehome WHERE 1"; // Lọc tất cả nếu không có điều kiện
-        $params = [];
-
-        if (!empty($brand)) {
-            // Nếu có thương hiệu, lọc theo thương hiệu
-            $sql .= " AND brand IN (" . implode(',', array_fill(0, count($brand), '?')) . ")";
-            $params = array_merge($params, $brand);
-        }
-
-        if (!empty($min) && !empty($max)) {
-            // Nếu có giá trị min và max, lọc theo giá
-            $sql .= " AND gia BETWEEN ? AND ?";
-            $params[] = $min;
-            $params[] = $max;
-        }
-
-        // Thêm phần phân trang
-        $sql .= " LIMIT ? OFFSET ?";
-        $stmt = $this->pdo->prepare($sql);
-
-        // Liên kết các giá trị tham số
-        $index = 1;
-        foreach ($params as $param) {
-            $stmt->bindValue($index++, $param);
-        }
-
-        $stmt->bindValue($index++, (int)$limit, PDO::PARAM_INT);
-        $stmt->bindValue($index++, (int)$offset, PDO::PARAM_INT);
-
-        $stmt->execute();
+    // Sản phẩm
+    public function getAllProducts() {
+        $stmt = $this->pdo->query("SELECT * FROM products");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function countFilteredProducts($brand, $min, $max) {
-        $sql = "SELECT COUNT(*) FROM mobilehome WHERE 1";
+    public function getProductById($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM products WHERE id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function addProduct($name, $price, $category_id) {
+        $stmt = $this->pdo->prepare("INSERT INTO products (name, price, category_id) VALUES (?, ?, ?)");
+        return $stmt->execute([$name, $price, $category_id]);
+    }
+    public function updateProduct($id, $name, $price, $category_id) {
+        $stmt = $this->pdo->prepare("UPDATE products SET name = ?, price = ?, category_id = ? WHERE id = ?");
+        return $stmt->execute([$name, $price, $category_id, $id]);
+    }
+    public function deleteProduct($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM products WHERE id = ?");
+        return $stmt->execute([$id]);
+    }
+    public function searchProducts($category_id, $keyword, $min_price, $max_price) {
+        $sql = "SELECT * FROM products WHERE 1=1";
         $params = [];
-
-        if (!empty($brand)) {
-            $sql .= " AND brand IN (" . implode(',', array_fill(0, count($brand), '?')) . ")";
-            $params = array_merge($params, $brand);
-        }
-
-        if (!empty($min) && !empty($max)) {
-            $sql .= " AND gia BETWEEN ? AND ?";
-            $params[] = $min;
-            $params[] = $max;
-        }
-
+        if (!empty($category_id)) { $sql .= " AND category_id = ?"; $params[] = $category_id; }
+        if (!empty($keyword))    { $sql .= " AND name LIKE ?";    $params[] = "%$keyword%"; }
+        if (is_numeric($min_price)) { $sql .= " AND price >= ?";  $params[] = $min_price; }
+        if (is_numeric($max_price)) { $sql .= " AND price <= ?";  $params[] = $max_price; }
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
-        return $stmt->fetchColumn();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function laysanphamtheoid($id) {
-        $sql = "SELECT * FROM sale WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
+
+    // Danh mục
+    public function getAllCategories() {
+        $stmt = $this->pdo->query("SELECT * FROM categories");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getCategoryById($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id = ?");
+        $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    public function laysanphamtheoid2($id) {
-        $sql = "SELECT * FROM vuacohang WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    public function addCategory($name) {
+        $stmt = $this->pdo->prepare("INSERT INTO categories (name) VALUES (?)");
+        return $stmt->execute([$name]);
     }
-    public function update($id, $name, $giamoi, $image, $mota) {
-        try {
-            $query = "UPDATE sale 
-                      SET name = :name, giamoi = :giamoi, image = :image, mota = :mota 
-                      WHERE id = :id";
-            $stmt = $this->pdo->prepare($query);
-    
-            $stmt->bindValue(":name", $name );
-            $stmt->bindValue(":giamoi", $giamoi);
-            $stmt->bindValue(":image", $image);
-            $stmt->bindValue(":mota", $mota);
-            $stmt->bindValue(":id", $id);
-    
-            return $stmt->execute();
-        } catch (PDOException $e) {
-            die("Lỗi cập nhật sản phẩm: " . $e->getMessage());
-        }
-        
+    public function updateCategory($id, $name) {
+        $stmt = $this->pdo->prepare("UPDATE categories SET name = ? WHERE id = ?");
+        return $stmt->execute([$name, $id]);
     }
-    function delete($id){
-        $sql = "DELETE FROM sale WHERE id =". $id;
-        $stmt = $this->pdo->prepare($sql);         
-        $stmt->execute();
+    public function deleteCategory($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM categories WHERE id = ?");
+        return $stmt->execute([$id]);
     }
 }

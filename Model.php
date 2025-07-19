@@ -14,6 +14,13 @@ class Database{
                 die("Lỗi kết nối: " . $e->getMessage());
             }
     }
+    public function getproductsale() {
+    $sql = "SELECT * FROM sale";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
     public function RegisterModel($username, $password) {
     $role = 'user';
     $sql = "INSERT INTO user (username, `password`, role) VALUES (:username, :password, :role)";

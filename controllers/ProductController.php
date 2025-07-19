@@ -63,6 +63,7 @@ class ProductController {
     }
 
     public function showHome() {
+        $images = $this->model->getproductsale();
         $categories = $this->model->getAllCategories();
         $category_id = $_GET['category_id'] ?? 0;
         $keyword = $_GET['keyword'] ?? '';

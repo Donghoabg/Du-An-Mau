@@ -3,7 +3,7 @@ session_start();
 require_once 'controllers/ProductController.php';
 
 $controller = new ProductController();
-$action = $_GET['page'] ?? 'guest';
+$action = $_GET['page'] ?? '';
 
 switch ($action) {
     case 'home':
@@ -39,7 +39,7 @@ switch ($action) {
     case 'delete_product':
         $controller->deleteProduct();
         break;
-    case 'Guest':
+    case 'guest':
         $controller->ControllerGuest();
         break;
     case 'register':

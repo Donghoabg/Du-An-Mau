@@ -54,48 +54,18 @@
             
             ?>
         </nav>
-        <div class="banner-container">
-            <div class="banner">
-                <a href="">
-                    <img src="images/banner9.jpg" alt="Banner 1" class="banner-image" height="1000px" />
-                </a>
-                <a href="">
-                    <img src="images/banner10.jpg" alt="Banner 2" class="banner-image" />
-                </a>
-                <a href="">
-                    <img src="images/banner11.jpg" alt="Banner 3" class="banner-image" />
-                </a>
-            </div>
-            <button class="prev" onclick="moveBanner(-1)">&#10094;</button>
-            <button class="next" onclick="moveBanner(1)">&#10095;</button>
-        </div>
-        <div class="banner4">
-            <a href="">
-                <img src="images/banner12.jpg" alt="">
-            </a>
-        </div>
-        <div class="banner5">
-            <a href="">
-                <img src="images/banner13.jpg" alt="">
-            </a>
-        </div>
-        <div class="bannerdai">
-            <img src="images/bannerdai.png" alt="">
-        </div>
-        <div class="khoangtrang">
-
-        </div>
+        
 <h2>Danh mục</h2>
 <ul>
     <?php foreach ($categories as $cat): ?>
         <li>
-            <a href="?category_id=<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></a>
-            | <a href="?action=edit_category&id=<?= $cat['id'] ?>">Sửa</a>
-            | <a href="?action=delete_category&id=<?= $cat['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
+            <a href="?page=product&category_id=<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></a>
+            | <a href="?page=edit_category&id=<?= $cat['id'] ?>">Sửa</a>
+            | <a href="?page=delete_category&id=<?= $cat['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
         </li>
     <?php endforeach; ?>
 </ul>
-<a href="?action=add_category">Thêm danh mục</a>
+<a href="?page=add_category">Thêm danh mục</a>
 
 <hr>
 
@@ -108,16 +78,16 @@
     <button type="submit">Lọc</button>
 </form>
 
-<a href="?action=add_product">Thêm sản phẩm</a>
+<a href="?page=add_product">Thêm sản phẩm</a>
 
 <h2>Sản phẩm</h2>
 <ul>
     <?php foreach ($products as $product): ?>
         <li>
-            <a href="?action=detail&id=<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></a>
+            <a href="?page=detail&id=<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></a>
             (<?= number_format($product['price']) ?>đ)
-            | <a href="?action=edit_product&id=<?= $product['id'] ?>">Sửa</a>
-            | <a href="?action=delete_product&id=<?= $product['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
+            | <a href="?page=edit_product&id=<?= $product['id'] ?>">Sửa</a>
+            | <a href="?page=delete_product&id=<?= $product['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
         </li>
     <?php endforeach; ?>
 </ul>

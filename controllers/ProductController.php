@@ -63,7 +63,7 @@ class ProductController {
     }
     public function showHome() {
         $images = $this->model->getproductsale();
-        include __DIR__ . '/../views/home.php';
+        include __DIR__ . '/../Views/home.php';
         exit;
     }
 
@@ -84,7 +84,7 @@ class ProductController {
     public function saveCategory() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->addCategory($_POST['name']);
-            header("Location: index.php");
+            header("Location: index.php?page=product");
             exit;
         }
     }
@@ -98,14 +98,15 @@ class ProductController {
     public function updateCategory() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->updateCategory($_GET['id'], $_POST['name']);
-            header("Location: index.php");
+            header("Location: index.php?page=product");
+
             exit;
         }
     }
 
     public function deleteCategory() {
         $this->model->deleteCategory($_GET['id']);
-        header("Location: index.php");
+        header("Location: index.php?page=product");
         exit;
     }
 
@@ -117,7 +118,7 @@ class ProductController {
     public function saveProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->addProduct($_POST['name'], $_POST['price'], $_POST['category_id']);
-            header("Location: index.php");
+            header("Location: index.php?page=product");
             exit;
         }
     }
@@ -131,14 +132,14 @@ class ProductController {
     public function updateProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->updateProduct($_GET['id'], $_POST['name'], $_POST['price'], $_POST['category_id']);
-            header("Location: index.php");
+            header("Location: index.php?page=product");
             exit;
         }
     }
 
     public function deleteProduct() {
         $this->model->deleteProduct($_GET['id']);
-        header("Location: index.php");
+        header("Location: index.php?page=product");
         exit;
     }
 

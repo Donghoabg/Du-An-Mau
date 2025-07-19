@@ -61,16 +61,20 @@ class ProductController {
     public function __construct() {
         $this->model = new Database();
     }
-
     public function showHome() {
         $images = $this->model->getproductsale();
+        include __DIR__ . '/../views/home.php';
+        exit;
+    }
+
+    public function product() {
         $categories = $this->model->getAllCategories();
         $category_id = $_GET['category_id'] ?? 0;
         $keyword = $_GET['keyword'] ?? '';
         $min_price = $_GET['min_price'] ?? null;
         $max_price = $_GET['max_price'] ?? null;
         $products = $this->model->searchProducts($category_id, $keyword, $min_price, $max_price);
-        include __DIR__ . '/../views/home.php';
+        include __DIR__ . '/../views/product.php';
     }
 
     public function showAddCategoryForm() {

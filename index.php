@@ -54,7 +54,9 @@ switch ($action) {
     case 'muahang':
         include 'Views/muahang.php';
         break;
-    
+    case 'product':
+        $controller->product();
+        break;
     default:
         echo "404 - Không tìm thấy trang.";
 }

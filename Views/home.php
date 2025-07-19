@@ -28,7 +28,7 @@
                     <span class="dam">Sản Phẩm</span>
                 </button>
                 <div id="myDropdown" class="content">
-                    <a href="?page=dienthoai">Điện thoại</a>
+                    <a href="?page=product">Điện thoại</a>
                     <a href="">Laptop</a>
                     <a href="">Phụ kiện</a>
                     <a href="">Đồng hồ thông minh</a>

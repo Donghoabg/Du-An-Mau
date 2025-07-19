@@ -94,7 +94,7 @@
         </div>
         <div class="giasoc">
             <h3>GIÁ SỐC HÔM NAY ⚡</h3>
-        </div>
+        </d iv>
         <main>
             <div class="slider-wrapper">
             <div class="gallery" id="gallery">

@@ -84,7 +84,7 @@ class ProductController {
     public function saveCategory() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->addCategory($_POST['name']);
-            header("Location: index.php?page=product");
+            header("Location: index.php");
             exit;
         }
     }
@@ -106,7 +106,7 @@ class ProductController {
 
     public function deleteCategory() {
         $this->model->deleteCategory($_GET['id']);
-        header("Location: index.php?page=product");
+        header("Location: index.php");
         exit;
     }
 
@@ -118,7 +118,7 @@ class ProductController {
     public function saveProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->addProduct($_POST['name'], $_POST['price'], $_POST['category_id']);
-            header("Location: index.php?page=product");
+            header("Location: index.php");
             exit;
         }
     }
@@ -132,14 +132,14 @@ class ProductController {
     public function updateProduct() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->model->updateProduct($_GET['id'], $_POST['name'], $_POST['price'], $_POST['category_id']);
-            header("Location: index.php?page=product");
+            header("Location: index.php");
             exit;
         }
     }
 
     public function deleteProduct() {
         $this->model->deleteProduct($_GET['id']);
-        header("Location: index.php?page=product");
+        header("Location: index.php");
         exit;
     }
 

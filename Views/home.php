@@ -102,7 +102,7 @@
                         <div class="box3">
                             <a href="?page=chitiet&id=<?= $img['id'] ?>">
                             <div class="box31">
-                                <img class="img" src="<?=$img['image']?>" style="width: 178px;"   alt="">
+                                <img  src="<?=$img['image']?>" style="width: 178px;"   alt="">
                                 <?php
                                 echo $img['name'];
                                 ?>

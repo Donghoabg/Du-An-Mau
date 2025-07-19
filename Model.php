@@ -14,13 +14,16 @@ class Database{
                 die("Lỗi kết nối: " . $e->getMessage());
             }
     }
-    public function RegisterModel($username, $password){
-    $sql = "INSERT INTO user (username, `password`) VALUES (:username, :password)";
+    public function RegisterModel($username, $password) {
+    $role = 'user';
+    $sql = "INSERT INTO user (username, `password`, role) VALUES (:username, :password, :role)";
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindParam(":username", $username);
     $stmt->bindParam(":password", $password);
+    $stmt->bindParam(":role", $role);
     return $stmt->execute();
-    }
+}
+    
 
     public function CheckUserExists($username) {
         $stmt = $this->pdo->prepare("SELECT * FROM user WHERE username = ?");

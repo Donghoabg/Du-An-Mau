@@ -49,9 +49,11 @@
 .from button:hover {
     background-color: #0056b3;
 }
-
+.box31 img{
+    width: 187px;
+}
 </style>
-<link rel="stylesheet" href="Views/css.css?v=12">
+<link rel="stylesheet" href="Views/css.css?v=1">
 <div class="vien">
     <header>
         <div class="username">

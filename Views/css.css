@@ -442,10 +442,7 @@ color: #DB0002;
     padding: 10px;
     transition: box-shadow 0.3s ease;
 }
-.box31 img{
-    background-color: #A50000;
-    width: 20px;
-}
+
 .anhsale{
     margin-left: -50px;
 }
@@ -571,5 +568,13 @@ color: #DB0002;
     padding: 5px;
     border-radius: 3px;
     border: 1px solid black;
+}
+.box31 img {
+    width: 100%;           /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của khung chứa */
+    max-width: 180px;      /* Giới hạn kích thước tối đa của ảnh để nó không quá lớn */
+    height: 180px;         /* Đặt chiều cao cố định cho ảnh */
+    object-fit: contain;   /* Rất quan trọng: Đảm bảo toàn bộ ảnh được hiển thị, co giãn để vừa với khung hình mà không bị cắt */
+    display: block;        /* Để loại bỏ khoảng trắng dưới ảnh và dễ dàng căn giữa */
+    margin: 0 auto 15px auto; /* Căn giữa ảnh theo chiều ngang và tạo khoảng cách 15px phía dưới */
 }
 

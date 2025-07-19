@@ -1,7 +1,7 @@
 <?php
 require_once 'Model.php';
 
-class Controller {
+class ProductController {
     
 
     public function ControllerGuest() {

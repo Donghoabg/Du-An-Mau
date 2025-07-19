@@ -1,36 +1,52 @@
 <?php
 session_start();
-require_once 'Controller.php';
-$run = new Controller();
-$page = $_GET['page'] ?? 'Guest';
-$id = $_GET['id'] ?? NULL;
-switch($page){
+require_once 'controllers/ProductController.php';
+
+$controller = new ProductController();
+$action = $_GET['page'] ?? 'guest';
+
+switch ($action) {
     case 'home':
-        $run->ControllerHome();
+        $controller->showHome();
+        break;
+    case 'add_category':
+        $controller->showAddCategoryForm();
+        break;
+    case 'save_category':
+        $controller->saveCategory();
+        break;
+    case 'edit_category':
+        $controller->showEditCategoryForm();
+        break;
+    case 'update_category':
+        $controller->updateCategory();
+        break;
+    case 'delete_category':
+        $controller->deleteCategory();
+        break;
+    case 'add_product':
+        $controller->showAddProductForm();
+        break;
+    case 'save_product':
+        $controller->saveProduct();
+        break;
+    case 'edit_product':
+        $controller->showEditProductForm();
+        break;
+    case 'update_product':
+        $controller->updateProduct();
+        break;
+    case 'delete_product':
+        $controller->deleteProduct();
         break;
     case 'Guest':
-        $run->ControllerGuest();
+        $controller->ControllerGuest();
         break;
     case 'register':
-        $run->ControllerRegister();
+        $controller->ControllerRegister();
         break;
     case 'login':
-        $run->ControllerLogin();
-        break;
-    case 'dienthoai':
-        $run->hienThiSanPham();
-        break;
-    case 'chitiet':
-        $run->chitiet($id);
-        break;
-    case 'chitiet2':
-        $run->chitiet2($id);
-        break;
-    case 'themsanpham':
-        $run->themsanpham2($id);
-        break;
-    case 'themsanpham2':
-        $run->themsanpham($id);
+        $controller->ControllerLogin();
         break;
     case 'giohang':
         include 'Views/giohang.php';
@@ -38,10 +54,8 @@ switch($page){
     case 'muahang':
         include 'Views/muahang.php';
         break;
-    case 'editproduct':
-        $run->EditProductController($id);
-        break;
-    case 'delete':
-        $run->remove($id);
-        break;
+    
+    default:
+        echo "404 - Không tìm thấy trang.";
 }
+?>

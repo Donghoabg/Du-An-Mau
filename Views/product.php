@@ -1,5 +1,9 @@
 <link rel="stylesheet" href="views/css.css?v=1">
-<link rel="stylesheet" href="views/product.css?v=1">
+<link rel="stylesheet" href="views/products.css">
+<style>
+    
+
+</style>
 <div class="vien">
     <header>
         <div class="username">
@@ -31,8 +35,9 @@
                 </div>
             </div>
             <div class="searchs">
-                <form action="">
-                    <input class="search" type="search">
+                <form action="" method="get">
+                    <input type="hidden" name="category_id" value="<?= $category_id ?>">
+                    <input class="search" type="text" name="keyword" placeholder="Từ khóa" value="<?= htmlspecialchars($keyword) ?>">
                     <input class="submit" type="submit" value="Tìm kiếm">
                 </form>
                 <div class="sanphamnoibat">
@@ -58,12 +63,13 @@
         <div class="trangchudienthoai">
             <span class="trangchu">Trang chủ</span> › <span class="dienthoai">Điện Thoại</span>
         </div>
-        <?php
+        
+            <?php
 $selectedCategoryId = $_GET['category_id'] ?? null;
 ?>
 
 <div class="boxthuonghieu">
-    <div class="thuonghieu">DANH MỤC SẢN PHẨM </div>
+    <div class="thuonghieu">DANH MỤC SẢN PHẨM</div>
 
     <?php foreach ($categories as $cat): ?>
         <label class="checkbox-label">
@@ -71,8 +77,8 @@ $selectedCategoryId = $_GET['category_id'] ?? null;
                 type="checkbox"
                 name="category_id"
                 value="<?= $cat['id'] ?>"
-                onchange="location.href='?page=product&category_id=' + this.value;"
                 <?= ($selectedCategoryId == $cat['id']) ? 'checked' : '' ?>
+                onclick="handleCategoryClick(this)"
             >
             <?= htmlspecialchars($cat['name']) ?>
             <span class="custom-checkmark"></span>
@@ -80,10 +86,11 @@ $selectedCategoryId = $_GET['category_id'] ?? null;
     <?php endforeach; ?>
 </div>
 
+
+
         
-        <a href="?page=add_category">Thêm danh mục</a>
+        <a href="?page=add_category"></a>
         
-        <hr>
         
         <h2>Lọc sản phẩm</h2>
         <form method="get">
@@ -109,6 +116,23 @@ $selectedCategoryId = $_GET['category_id'] ?? null;
         </ul>
     </div>
 <script src="Views/js.js?v=12"></script>
+<script>
+    function handleCategoryClick(checkbox) {
+        const categoryId = checkbox.value;
+        const isChecked = checkbox.checked;
+        const currentId = new URLSearchParams(window.location.search).get("category_id");
+
+        if (isChecked) {
+            if (currentId != categoryId) {
+                window.location.href = "?page=product&category_id=" + categoryId;
+            } else {
+                window.location.href = "?page=product";
+            }
+        } else {
+            window.location.href = "?page=product";
+        }
+    }
+</script>
         
 
         

@@ -250,7 +250,7 @@ nav{
     border: none;
     width: 25px;
     height: 60px;
-    transition: transform 1s ease; /* Hiệu ứng chuyển động mượt mà */
+    transition: transform 1s ease; 
     border-radius: 1px;
 }
 
@@ -570,11 +570,10 @@ color: #DB0002;
     border: 1px solid black;
 }
 .box31 img {
-    width: 100%;           /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của khung chứa */
-    max-width: 180px;      /* Giới hạn kích thước tối đa của ảnh để nó không quá lớn */
-    height: 180px;         /* Đặt chiều cao cố định cho ảnh */
-    object-fit: contain;   /* Rất quan trọng: Đảm bảo toàn bộ ảnh được hiển thị, co giãn để vừa với khung hình mà không bị cắt */
-    display: block;        /* Để loại bỏ khoảng trắng dưới ảnh và dễ dàng căn giữa */
-    margin: 0 auto 15px auto; /* Căn giữa ảnh theo chiều ngang và tạo khoảng cách 15px phía dưới */
+    width: 100%;           
+    max-width: 180px;      
+    height: 180px;         
+    object-fit: contain;   
+    display: block;        
+    margin: 0 auto 15px auto; 
 }
-

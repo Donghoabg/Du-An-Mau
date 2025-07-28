@@ -3,7 +3,7 @@ session_start();
 require_once 'controllers/ProductController.php';
 
 $controller = new ProductController();
-$action = $_GET['page'] ?? '';
+$action = $_GET['page'] ?? 'home';
 
 switch ($action) {
     case 'home':
@@ -58,6 +58,6 @@ switch ($action) {
         $controller->product();
         break;
     default:
-        echo "404 - Không tìm thấy trang.";
+        echo "404 - Không tìm thấy tran.";
 }
 ?>

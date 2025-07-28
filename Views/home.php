@@ -94,7 +94,7 @@
         </div>
         <div class="giasoc">
             <h3>GIÁ SỐC HÔM NAY ⚡</h3>
-        </d iv>
+        </div>
         <main>
             <div class="slider-wrapper">
             <div class="gallery" id="gallery">
@@ -249,5 +249,3 @@
     const totalImages = <?php echo count($images); ?>;
     </script>
 <script src="Views/js.js?v=12"></script>
-
-

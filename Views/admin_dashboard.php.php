@@ -116,7 +116,6 @@ $users = $model->getAllUsers();
             <?php endforeach; ?>
         </table>
 
-        <!-- Quản lý người dùng -->
         <h2 id="users">Quản lý người dùng</h2>
         <table>
             <tr>

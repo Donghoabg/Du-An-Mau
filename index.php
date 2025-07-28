@@ -3,7 +3,7 @@ session_start();
 require_once 'controllers/ProductController.php';
 
 $controller = new ProductController();
-$action = $_GET['page'] ?? 'home';
+$action = $_GET['page'] ?? 'guest';
 
 switch ($action) {
     case 'home':

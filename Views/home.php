@@ -3,7 +3,7 @@
         text-decoration: none;
     }
 </style>
-<link rel="stylesheet" href="Views/css.css?v=1">
+<link rel="stylesheet" href="Views/css.css?v=2">
 <?php
 ?>
 <div class="vien">
@@ -12,7 +12,7 @@
         <?php
         echo "Xin chào " . htmlspecialchars($_SESSION['username']);
         ?>
-        <a href="?page=Guest">Đăng Xuất</a>
+        <a href="?page=guest">Đăng Xuất</a>
         </div>
     </header>
     <div class="container">

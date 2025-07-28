@@ -2,9 +2,10 @@
     padding: 0;
     margin: 0;
 }
+
 header{
     background-color: black;
-    color: white;
+    color: red;
     height: 30px;
 }
 .danhmucsanpham{
@@ -55,14 +56,13 @@ header{
 nav{
     margin-top: 15px;
 }
-
 .content{
 
     display: none;
     position: absolute;
     background-color: #f1f1f1;
     min-width: 180px;
-    z-index: 1;
+    z-index: 100;
 }
 .show{
     display: block;
@@ -103,8 +103,9 @@ nav{
     position: relative;
 }
 .username{
+    margin-top: 20px;
     line-height: 30px;
-    margin-left: 60px;
+    margin-left: 55px;
 }
 .username a{
     float: right;
@@ -124,6 +125,7 @@ nav{
     padding-top: 20px;
     margin-left: 50px;
     padding-left: 20px;
+    float: left;
 }
 .sanphamnoibat{
     display: flex;
@@ -195,7 +197,6 @@ nav{
     border-radius: 5px;
   }
 .banner4{
-    margin-top: 52px;
 
 }
 .banner4 img{ 
@@ -203,6 +204,7 @@ nav{
     margin-left: 11px;
     margin-bottom: 8px;
     height: 163px;
+    margin-top: 53px;
 }
 .box a{
     text-decoration: none;

@@ -39,7 +39,7 @@ class Database{
     }
 
     public function LoginModel($username, $password){
-        $sql = "SELECT * FROM user WHERE username = :username AND password = :password";
+        $sql = "SELECT * FROM users WHERE username = :username AND password = :password";
         $stmt= $this->pdo->prepare($sql);
         $stmt->bindParam(":username", $username);
         $stmt->bindParam(":password", $password);

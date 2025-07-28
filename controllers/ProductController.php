@@ -62,10 +62,13 @@ class ProductController {
         $this->model = new Database();
     }
     public function showHome() {
-        $images = $this->model->getproductsale();
-        include __DIR__ . '/../Views/home.php';
-        exit;
-    }
+    $images = $this->model->getproductsale(); // sản phẩm khuyến mãi
+    $keyword = $_GET['keyword'] ?? '';
+    $products = $this->model->searchProducts(0, $keyword, null, null); // lấy toàn bộ sản phẩm theo keyword
+    include __DIR__ . '/../Views/home.php';
+    exit;
+}
+
 
     public function product() {
         $categories = $this->model->getAllCategories();

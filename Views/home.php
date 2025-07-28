@@ -37,10 +37,13 @@
                 </div>
             </div>
             <div class="searchs">
-                <form action="">
-                    <input class="search" type="search">
+                <form method="get" action="">
+                    <input type="hidden" name="page" value="product"> <!-- Quan trọng -->
+                    <input class="search" type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..." value="">
                     <input class="submit" type="submit" value="Tìm kiếm">
                 </form>
+
+                <div class="s
                 <div class="sanphamnoibat">
                     <a href="">iPhone 16 Series</a>
                     <a href="">Galaxy Z Fold6|Flip6</a>

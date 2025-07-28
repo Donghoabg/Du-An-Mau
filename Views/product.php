@@ -36,6 +36,7 @@
             </div>
             <div class="searchs">
                 <form action="" method="get">
+                    <input type="hidden" name="page" value="product">
                     <input type="hidden" name="category_id" value="<?= $category_id ?>">
                     <input class="search" type="text" name="keyword" placeholder="Từ khóa" value="<?= htmlspecialchars($keyword) ?>">
                     <input class="submit" type="submit" value="Tìm kiếm">
@@ -70,38 +71,39 @@ $selectedCategoryId = $_GET['category_id'] ?? null;
 
 <div class="boxthuonghieu">
     <div class="thuonghieu">DANH MỤC SẢN PHẨM</div>
+    <div class="containercheckboxdanhmuc">
 
-    <?php foreach ($categories as $cat): ?>
-        <label class="checkbox-label">
-            <input
+        <?php foreach ($categories as $cat): ?>
+            <label class="checkbox-label">
+                <input
                 type="checkbox"
                 name="category_id"
                 value="<?= $cat['id'] ?>"
                 <?= ($selectedCategoryId == $cat['id']) ? 'checked' : '' ?>
                 onclick="handleCategoryClick(this)"
-            >
-            <?= htmlspecialchars($cat['name']) ?>
-            <span class="custom-checkmark"></span>
-        </label><br>
-    <?php endforeach; ?>
+                >
+                <?= htmlspecialchars($cat['name']) ?>
+                <span class="custom-checkmark"></span>
+            </label><br>
+            <?php endforeach; ?>
+        </div>
 </div>
 
-
-
-        
         <a href="?page=add_category"></a>
         
         
         <h2>Lọc sản phẩm</h2>
-        <form method="get">
+        <form method="get" action="">
+            <input type="hidden" name="page" value="product">
             <input type="hidden" name="category_id" value="<?= $category_id ?>">
             <input type="text" name="keyword" placeholder="Từ khóa" value="<?= htmlspecialchars($keyword) ?>">
             <input type="number" name="min_price" placeholder="Giá từ" value="<?= htmlspecialchars($min_price) ?>">
             <input type="number" name="max_price" placeholder="Đến" value="<?= htmlspecialchars($max_price) ?>">
             <button type="submit">Lọc</button>
         </form>
+
         
-        <a href="?page=add_product">Thêm sản phẩm</a>
+        <a href="?page=add_product"></a>
         
         <h2>Sản phẩm</h2>
         <ul>
@@ -130,7 +132,7 @@ $selectedCategoryId = $_GET['category_id'] ?? null;
             }
         } else {
             window.location.href = "?page=product";
-        }
+      
     }
 </script>
         

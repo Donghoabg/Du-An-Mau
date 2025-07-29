@@ -135,7 +135,53 @@
                         <a href="?page=product&sort=desc" <?= isset($_GET['sort']) && $_GET['sort'] == 'desc' ? 'style="font-weight:bold;"' : '' ?>>Giá cao đến thấp</a>
 
                     </div>
+                    <div class="containerproduct">
+                        <?php
+                        foreach ($products as $img) {
+                            ?>
+                                <div class="boxproduct">
+                                    <a href="?page=chitiet&id=<?= $img['id'] ?>">
+                                    <div class="box31">
+                                        <img  src="<?=$img['image']?>" style="width: 178px;"   alt="">
+                                        <?php
+                                        echo $img['name'];
+                                        ?>
+                                        <div class="starss">
+                                            <span class="star filled">&#9733;</span>
+                                            <span class="star filled">&#9733;</span>
+                                            <span class="star filled">&#9733;</span>
+                                            <span class="star filled">&#9733;</span>
+                                            <span class="star">&#9733;</span>
+                                        </div>
+                                        <?php
+                                        if(isset($img['giamoi'])){
+                                            ?>
+                                            <div class="giamoi"><?= number_format($img['giamoi'], 0 ,'', '.')?> đ</div>
+                                            <div class="phantram2">
+                                                <?php
+                                                $phantram = (($img['gia'] - $img['giamoi']) / $img['gia']) * 100;
+                                                echo number_format($phantram, 0)  ;
+                                                echo " %";
+                                                ?>
+                                            </div>
+                                            <div class="giacu"><?= number_format($img['gia'], 0 ,'', '.')?> đ</div>
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <div class="giamoi"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
+                                            <?php
+                                        }
+                                        ?>
+                                    </a>
 
+                                </div>
+                        </div>
+                            
+                            <?php
+                        }
+                        ?>
+                        // Đóng thẻ div containerproduct 
+                    </div>
 
                     <ul>
                         <?php foreach ($products as $product): ?>

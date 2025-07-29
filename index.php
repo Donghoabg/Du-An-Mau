@@ -57,7 +57,11 @@ switch ($action) {
     case 'product':
         $controller->product();
         break;
+    
+    
+
     default:
         echo "404 - Không tìm thấy tran.";
+
 }
 ?>

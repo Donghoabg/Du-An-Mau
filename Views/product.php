@@ -66,8 +66,9 @@
         <div class="trangchudienthoai">
             <span class="trangchu">Trang chủ</span> › <span class="dienthoai">Điện Thoại</span>
         </div>
-            <article>
-
+        <div class="main-content">
+                
+    
                 <div class="cotbentrai">
                     <?php
                     $selectedCategoryId = $_GET['category_id'] ?? null;
@@ -121,24 +122,33 @@
                     </div>
                     
                 </div>
-            </article>
-
-
-            <div class="cotbenphai">
-                <a href="?page=add_product"></a>
                 
-                <h2>Sản phẩm</h2>
-                <ul>
-                    <?php foreach ($products as $product): ?>
-                        <li>
-                            <a href="?page=detail&id=<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></a>
-                            (<?= number_format($product['price']) ?>đ)
-                            | <a href="?page=edit_product&id=<?= $product['id'] ?>">Sửa</a>
-                            | <a href="?page=delete_product&id=<?= $product['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>     
+        
+                <div class="cotbenphai">
+                    <a href="?page=add_product"></a>
+                    <div class="tieude">
+                        <h2>SẢN PHẨM</h2>
+                    </div>
+                    <div class="luachon">
+                        <a href="?page=product&sort=new" class="<?= ($_GET['sort'] ?? '') == 'new' ? 'active' : '' ?>">Mới nhất</a>
+                        <a href="?page=product&sort=asc" <?= isset($_GET['sort']) && $_GET['sort'] == 'asc' ? 'style="font-weight:bold;"' : '' ?>>Giá thấp đến cao</a> |
+                        <a href="?page=product&sort=desc" <?= isset($_GET['sort']) && $_GET['sort'] == 'desc' ? 'style="font-weight:bold;"' : '' ?>>Giá cao đến thấp</a>
+
+                    </div>
+
+
+                    <ul>
+                        <?php foreach ($products as $product): ?>
+                            <li>
+                                <a href="?page=detail&id=<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></a>
+                                (<?= number_format($product['price']) ?>đ)
+                                | <a href="?page=edit_product&id=<?= $product['id'] ?>">Sửa</a>
+                                | <a href="?page=delete_product&id=<?= $product['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>     
+            </div>
                   
             <script src="Views/js.js?v=12"></script>
             <script>
@@ -167,5 +177,21 @@
         document.getElementById('filterForm').submit();
     }
 </script>
+<script>
+    const options = document.querySelectorAll('.luachon a');
+
+    options.forEach(option => {
+        option.addEventListener('click', function(e) {
+             // ngăn chuyển trang nếu dùng #
+            
+            // Bỏ class active của tất cả
+            options.forEach(opt => opt.classList.remove('active'));
+
+            // Thêm class active cho thẻ đang click
+            this.classList.add('active');
+        });
+    });
+</script>
+
 </div>
 </div>

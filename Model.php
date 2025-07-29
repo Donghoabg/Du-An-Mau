@@ -80,17 +80,44 @@ class Database{
         $stmt = $this->pdo->prepare("DELETE FROM products WHERE id = ?");
         return $stmt->execute([$id]);
     }
-    public function searchProducts($category_id, $keyword, $min_price, $max_price) {
-        $sql = "SELECT * FROM products WHERE 1=1";
-        $params = [];
-        if (!empty($category_id)) { $sql .= " AND category_id = ?"; $params[] = $category_id; }
-        if (!empty($keyword))    { $sql .= " AND name LIKE ?";    $params[] = "%$keyword%"; }
-        if (is_numeric($min_price)) { $sql .= " AND price >= ?";  $params[] = $min_price; }
-        if (is_numeric($max_price)) { $sql .= " AND price <= ?";  $params[] = $max_price; }
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function searchProducts($category_id, $keyword, $min_price, $max_price, $sort = '') {
+    $sql = "SELECT * FROM products WHERE 1=1";
+    $params = [];
+
+    if (!empty($category_id)) {
+        $sql .= " AND category_id = ?";
+        $params[] = $category_id;
     }
+
+    if (!empty($keyword)) {
+        $sql .= " AND name LIKE ?";
+        $params[] = "%$keyword%";
+    }
+
+    if (is_numeric($min_price)) {
+        $sql .= " AND price >= ?";
+        $params[] = $min_price;
+    }
+
+    if (is_numeric($max_price)) {
+        $sql .= " AND price <= ?";
+        $params[] = $max_price;
+    }
+
+    // ✅ Thêm phần sắp xếp
+    if ($sort === 'asc') {
+        $sql .= " ORDER BY price ASC";
+    } elseif ($sort === 'desc') {
+        $sql .= " ORDER BY price DESC";
+    } elseif ($sort === 'new') {
+        $sql .= " ORDER BY id DESC"; // hoặc created_at nếu có
+    }
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
     // Danh mục
     public function getAllCategories() {
@@ -114,4 +141,9 @@ class Database{
         $stmt = $this->pdo->prepare("DELETE FROM categories WHERE id = ?");
         return $stmt->execute([$id]);
     }
+
+
+
+
+
 }

@@ -1,10 +1,11 @@
-<link rel="stylesheet" href="views/css.css?v=1">
-<link rel="stylesheet" href="views/products.css">
+<link rel="stylesheet" href="views/css.css?v=12">
+<link rel="stylesheet" href="views/products.css?v=12">
 <style>
     
 
 </style>
 <div class="vien">
+
     <header>
         <div class="username">
         <?php
@@ -65,80 +66,87 @@
         <div class="trangchudienthoai">
             <span class="trangchu">Trang chủ</span> › <span class="dienthoai">Điện Thoại</span>
         </div>
+            <article>
+
+                <div class="cotbentrai">
+                    <?php
+                    $selectedCategoryId = $_GET['category_id'] ?? null;
+                    ?>
         
-            <?php
-$selectedCategoryId = $_GET['category_id'] ?? null;
-?>
-
-<div class="boxthuonghieu">
-    <div class="thuonghieu">DANH MỤC SẢN PHẨM</div>
-    <div class="containercheckboxdanhmuc">
-
-        <?php foreach ($categories as $cat): ?>
-            <label class="checkbox-label">
-                <input
-                type="checkbox"
-                name="category_id"
-                value="<?= $cat['id'] ?>"
-                <?= ($selectedCategoryId == $cat['id']) ? 'checked' : '' ?>
-                onclick="handleCategoryClick(this)"
-                >
-                <?= htmlspecialchars($cat['name']) ?>
-                <span class="custom-checkmark"></span>
-            </label><br>
-            <?php endforeach; ?>
-        </div>
-</div>
-
-        <a href="?page=add_category"></a>
+                    <div class="boxthuonghieu">
+                        <div class="thuonghieu">DANH MỤC SẢN PHẨM</div>
+                        <div class="containercheckboxdanhmuc">
         
-        <div class="containerlocsanpham">
-
-            <h2>Lọc sản phẩm</h2>
-            <form id="filterForm" method="get" action="">
-                <input type="hidden" name="page" value="product">
-                <input type="hidden" name="category_id" value="<?= isset($category_id) ? $category_id : '' ?>">
+                            <?php foreach ($categories as $cat): ?>
+                                <label class="checkbox-label">
+                                    <input
+                                    type="checkbox"
+                                    name="category_id"
+                                    value="<?= $cat['id'] ?>"
+                                    <?= ($selectedCategoryId == $cat['id']) ? 'checked' : '' ?>
+                                    onclick="handleCategoryClick(this)"
+                                    >
+                                    <?= htmlspecialchars($cat['name']) ?>
+                                    <span class="custom-checkmark"></span>
+                                </label><br>
+                                <?php endforeach; ?>
+                            </div>
+                            
+                    </div>
+        
+                    <a href="?page=add_category"></a>
+                    
+                    <div class="containerlocsanpham">
             
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <button type="button" onclick="setPriceAndSubmit(2000000, 5000000)">Từ 2Tr - 5Tr</button>
-                    <button type="button" onclick="setPriceAndSubmit(6000000, 12000000)">Từ 6Tr - 12Tr</button>
-                    <button type="button" onclick="setPriceAndSubmit(13000000, 20000000)">Từ 13Tr - 20Tr</button>
-                    <button type="button" onclick="setPriceAndSubmit(21000000, '')">Trên 20Tr</button>
+                        <h2>Chọn khoảng giá</h2>
+                        <form id="filterForm" method="get" action="">
+                            <input type="hidden" name="page" value="product">
+                            <input type="hidden" name="category_id" value="<?= isset($category_id) ? $category_id : '' ?>">
+                        
+                            <div>
+                                <button type="button" onclick="setPriceAndSubmit(2000000, 5000000)">Từ 2Tr - 5Tr</button><br>
+                                <button type="button" onclick="setPriceAndSubmit(6000000, 12000000)">Từ 6Tr - 12Tr</button><br>
+                                <button type="button" onclick="setPriceAndSubmit(13000000, 20000000)">Từ 13Tr - 20Tr</button><br>
+                                <button type="button" onclick="setPriceAndSubmit(21000000, '')">Trên 20Tr</button>
+                            </div>
+                        
+                            <br>
+                        
+                            <input type="number" name="min_price" id="min_price" placeholder="Giá từ" value="<?= isset($min_price) ? htmlspecialchars($min_price) : '' ?>">
+                            <input type="number" name="max_price" id="max_price" placeholder="Đến" value="<?= isset($max_price) ? htmlspecialchars($max_price) : '' ?>">
+                        
+                            <br><br>
+                            <button type="submit"> <strong>ÁP DỤNG</strong></button> 
+                        </form>
+                    </div>
+                    
                 </div>
-            
-                <br>
-            
-                <input type="number" name="min_price" id="min_price" placeholder="Giá từ" value="<?= isset($min_price) ? htmlspecialchars($min_price) : '' ?>">
-                <input type="number" name="max_price" id="max_price" placeholder="Đến" value="<?= isset($max_price) ? htmlspecialchars($max_price) : '' ?>">
-            
-                <br><br>
-                <button type="submit">Lọc</button> 
-            </form>
-        </div>
+            </article>
 
 
-
-        <a href="?page=add_product">Thêm sản phẩm</a>
-        
-        <h2>Sản phẩm</h2>
-        <ul>
-            <?php foreach ($products as $product): ?>
-                <li>
-                    <a href="?page=detail&id=<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></a>
-                    (<?= number_format($product['price']) ?>đ)
-                    | <a href="?page=edit_product&id=<?= $product['id'] ?>">Sửa</a>
-                    | <a href="?page=delete_product&id=<?= $product['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<script src="Views/js.js?v=12"></script>
-<script>
-    function handleCategoryClick(checkbox) {
-        const categoryId = checkbox.value;
+            <div class="cotbenphai">
+                <a href="?page=add_product"></a>
+                
+                <h2>Sản phẩm</h2>
+                <ul>
+                    <?php foreach ($products as $product): ?>
+                        <li>
+                            <a href="?page=detail&id=<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></a>
+                            (<?= number_format($product['price']) ?>đ)
+                            | <a href="?page=edit_product&id=<?= $product['id'] ?>">Sửa</a>
+                            | <a href="?page=delete_product&id=<?= $product['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>     
+                  
+            <script src="Views/js.js?v=12"></script>
+            <script>
+                function handleCategoryClick(checkbox) {
+                    const categoryId = checkbox.value;
         const isChecked = checkbox.checked;
         const currentId = new URLSearchParams(window.location.search).get("category_id");
-
+        
         if (isChecked) {
             if (currentId != categoryId) {
                 window.location.href = "?page=product&category_id=" + categoryId;
@@ -154,8 +162,10 @@ $selectedCategoryId = $_GET['category_id'] ?? null;
     function setPriceAndSubmit(min, max) {
         document.getElementById('min_price').value = min;
         document.getElementById('max_price').value = max;
-
+        
         // Tự động submit form
         document.getElementById('filterForm').submit();
     }
 </script>
+</div>
+</div>

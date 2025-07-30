@@ -1,5 +1,5 @@
     <link rel="stylesheet" href="views/css.css?v=22">
-    <link rel="stylesheet" href="views/products.css?v=12">
+    <link rel="stylesheet" href="views/products.css?v=3">
     <style>
         
 
@@ -128,35 +128,37 @@
 
                         </div>
 
-                            <?php
+                        <div class="product-item">
+                            <?php   
                             foreach ($products as $img) {
                                 ?>
-                                <div class="newproduct">
-                                    <a href="?page=chitiet&id=<?= $img['id']  ?>">
-                                    
-                                        <img  src="<?=$img['image']?>">
-                                        <div class="name">
-                                            <?php
-                                            echo $img['name'];
-                                            ?>
-
-                                        </div>
-                                        <div class="starss">
-                                            <span class="star filled">&#9733;</span>
-                                            <span class="star filled">&#9733;</span>
-                                            <span class="star filled">&#9733;</span>
-                                            <span class="star filled">&#9733;</span>
-                                            <span class="star">&#9733;</span>
-                                        </div>
-                                        <div class="prices"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
-                                    </a>
-                                        <div class="boxdathang">
-                                            <a href="">Đặt Hàng</a>
-                                        </div>
-                                </div>
-                                <?php
+                                    <div class="newproduct">
+                                        <a href="?page=chitiet&id=<?= $img['id']  ?>">
+                                        
+                                            <img  src="<?=$img['image']?>">
+                                            <div class="name">
+                                                <?php
+                                                echo $img['name'];
+                                                ?>
+    
+                                            </div>
+                                            <div class="starss">
+                                                <span class="star filled">&#9733;</span>
+                                                <span class="star filled">&#9733;</span>
+                                                <span class="star filled">&#9733;</span>
+                                                <span class="star filled">&#9733;</span>
+                                                <span class="star">&#9733;</span>
+                                            </div>
+                                            <div class="prices"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
+                                        </a>
+                                            <div class="boxdathang">
+                                                <a href="">Đặt Hàng</a>
+                                            </div>
+                                    </div>
+                                    <?php
                             }
                             ?>
+                            </div>
                             <div class="pagination">
                                 <?php
                                 $query = $_GET;

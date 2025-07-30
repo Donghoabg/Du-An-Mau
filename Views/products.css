@@ -188,15 +188,7 @@
     color: #000;
     margin-top: 5px;
 }
-.newproduct{
-    float: left;
-    width: 240px;
-    height: 480px;
-    margin: 10px; 
-    border: 1px solid #F8F8F8;
-    background-color: #FFFFFF; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-}
+
 .starss {
     margin: 20px;
     margin-top: -10px;
@@ -205,15 +197,25 @@
     text-decoration: none;
     color: black; 
 }
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* cách giữa các sản phẩm */
+}
+
 .newproduct {
+    margin-left: 30px;
     float: left;
     width: 240px;
     height: 480px;
-    margin: 10px;
     border: 1px solid #F8F8F8;
     background-color: #FFFFFF;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: relative; /* Đảm bảo các phần tử con được căn chỉnh bên trong */
+    position: relative;
+}
+.newproduct:not() {
+    margin-left: 50px;
 }
 
 .boxdathang {

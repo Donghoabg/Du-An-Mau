@@ -65,8 +65,8 @@ class ProductController {
         $model = new Database();
         $productss = $model->getSaleProducts();
 
-        $limit = 8;
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 10;
+        $page = isset($_GET['p']) ? (int)$_GET['p'] : 1;
         if ($page < 1) $page = 1;
         $offset = ($page - 1) * $limit;
         $products = $model->getProducts($limit, $offset);

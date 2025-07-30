@@ -2,9 +2,20 @@
     .vien a{
         text-decoration: none;
     }
+    .product-list-tight {
+    gap: 0 !important; /* rút ngắn khoảng cách */
+}
+.product-list-tight {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* rút khoảng cách giữa các item */
+}
+
+
+    
 </style>
 <link rel="stylesheet" href="Views/css.css?v=2">
-<link rel="stylesheet" href="Views/products.?v=3">
+<link rel="stylesheet" href="Views/products.css?v=3">
 <?php
 ?>
 <div class="vien">
@@ -101,7 +112,7 @@
                             <div class="box31">
                                 <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="178px">
                                 
-                                <?= htmlspecialchars($product['name']) ?>
+                                <?= htmlspecialchars($product['name']) ?><br>
                                 
                                 <div class="starss">
                                     <span class="star filled">&#9733;</span>
@@ -187,36 +198,41 @@
         <div class="vuacohang">
             <h3>SẢN PHẨM</h3>
         </div>
-        <?php
-                            foreach ($products as $img) {
-                                ?>
-                                <div class="newproduct">
-                                    <a href="?page=chitiet&id=<?= $img['id']  ?>">
-                                    
-                                        <img  src="<?=$img['image']?>">
-                                        <div class="name">
-                                            <?php
-                                            echo $img['name'];
-                                            ?>
+        <div class="product-list product-list-tight">
 
-                                        </div>
-                                        <div class="starss">
-                                            <span class="star filled">&#9733;</span>
-                                            <span class="star filled">&#9733;</span>
-                                            <span class="star filled">&#9733;</span>
-                                            <span class="star filled">&#9733;</span>
-                                            <span class="star">&#9733;</span>
-                                        </div>
-                                        <div class="prices"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
-                                    </a>
-                                        <div class="boxdathang">
-                                            <a href="">Đặt Hàng</a>
-                                        </div>
-                                </div>
-                                <?php
-                            }
+        <?php
+            foreach ($products as $img) {
+                ?>
+                <div class="newproduct">
+                    <a href="?page=chitiet&id=<?= $img['id']  ?>">
+                    
+                        <img  src="<?=$img['image']?>">
+                        <div class="name">
+                            <?php
+                            echo $img['name'];
                             ?>
+
+                        </div>
+                        <div class="starss">
+                            <span class="star filled">&#9733;</span>
+                            <span class="star filled">&#9733;</span>
+                            <span class="star filled">&#9733;</span>
+                            <span class="star filled">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                        </div>
+                        <div class="prices"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
+                    </a>
+                        <div class="boxdathang">
+                            <a href="">Đặt Hàng</a>
+                        </div>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+                            <br><br><br>
                             <div class="pagination">
+                                <br><br>
                                 <?php
                                 $query = $_GET;
                                 for ($i = 1; $i <= $totalPages; $i++):
@@ -226,7 +242,7 @@
                                     <a href="<?= $link ?>" <?= ($i == $page) ? 'style="font-weight:bold;"' : '' ?>><?= $i ?></a>
                                 <?php endfor; ?>
 
-                            </div>
+                            </div><br><br><br>
 
     <div class="banner11">
         <img src="images/24.jpg.png" width="1419px" alt="">

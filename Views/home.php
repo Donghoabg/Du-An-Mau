@@ -3,7 +3,7 @@
         text-decoration: none;
     }
 </style>
-<link rel="stylesheet" href="Views/css.css?v=21">
+<link rel="stylesheet" href="Views/css.css?v=2">
 <?php
 ?>
 <div class="vien">
@@ -24,17 +24,9 @@
             </div>
             <div class="danhmucsanpham">
                 <button onclick="toggleMenu()" class="dropbtn">
-                    <span class="nhat">Danh Mục</span> <br> 
-                    <span class="dam">Sản Phẩm</span>
+                    <span class="dam"><a href="index.php?page=product">Sản Phẩm</a></span>
                 </button>
-                <div id="myDropdown" class="content">
-                    <a href="?page=product">Điện thoại</a>
-                    <a href="">Laptop</a>
-                    <a href="">Phụ kiện</a>
-                    <a href="">Đồng hồ thông minh</a>
-                    <a href="">Túi xách công nghệ</a>
-                    <a href="">Loa công nghệ di động</a>
-                </div>
+
             </div>
             <div class="searchs">
                 <form method="get" action="">
@@ -42,8 +34,6 @@
                     <input class="search" type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..." value="">
                     <input class="submit" type="submit" value="Tìm kiếm">
                 </form>
-
-                <div class="s
                 <div class="sanphamnoibat">
                     <a href="">iPhone 16 Series</a>
                     <a href="">Galaxy Z Fold6|Flip6</a>

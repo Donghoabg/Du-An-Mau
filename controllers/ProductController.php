@@ -69,30 +69,31 @@ class ProductController {
     exit;
 }
 
-
-    public function product() {
-        $model = new Database();
-
-    $limit = 8;
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    if ($page < 1) $page = 1;
-
-    $offset = ($page - 1) * $limit;
-
+public function product() {
     $sort = $_GET['sort'] ?? '';
     $category_id = $_GET['category_id'] ?? 0;
     $keyword = $_GET['keyword'] ?? '';
     $min_price = $_GET['min_price'] ?? null;
     $max_price = $_GET['max_price'] ?? null;
 
-    $products = $model->getProducts($limit, $offset, $sort, $category_id, $keyword, $min_price, $max_price);
-    $total = $model->getTotalProducts($category_id, $keyword, $min_price, $max_price); // Cũng nên áp dụng bộ lọc
+    $limit = 8;
+    $page = isset($_GET['p']) ? (int)$_GET['p'] : 1;
+    if ($page < 1) $page = 1;
+    $offset = ($page - 1) * $limit;
+
+    $model = new Database();
+    $result = $model->searchProducts($category_id, $keyword, $min_price, $max_price, $sort, $limit, $offset);
+    $products = $result['products'];
+    $total = $result['total'];
     $totalPages = ceil($total / $limit);
 
     $categories = $model->getAllCategories();
 
-    include 'views/products/index.php';
-    }
+    // Truyền đúng biến sang view
+    include __DIR__ . '/../Views/product.php';
+}
+
+    
 
     public function showAddCategoryForm() {
         include __DIR__ . '/../views/category_form.php';

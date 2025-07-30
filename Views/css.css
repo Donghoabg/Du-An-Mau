@@ -13,8 +13,18 @@ header{
     display: inline-block;
     margin-top: 30px;
     margin-left: 40px;
+
+
     float: left;
     
+    
+    
+}
+.danhmucsanpham a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
 }
 .logo{
     padding: 20px;
@@ -24,9 +34,9 @@ header{
 .dropbtn{
     background-color: white;
     color: black;
-    padding: 5px 15px;
+    padding: 10px 12px;
     border: 1px solid black;
-    border-radius: 20px;
+    border-radius: 12px;
 
 }
 .dam{

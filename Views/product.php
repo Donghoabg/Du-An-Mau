@@ -1,4 +1,4 @@
-    <link rel="stylesheet" href="views/css.css?v=2">
+    <link rel="stylesheet" href="views/css.css?v=22">
     <link rel="stylesheet" href="views/products.css?v=1">
     <style>
         
@@ -23,17 +23,9 @@
                 </div>
                 <div class="danhmucsanpham">
                     <button onclick="toggleMenu()" class="dropbtn">
-                        <span class="nhat">Danh Mục</span> <br> 
-                        <span class="dam">Sản Phẩm</span>
+                        <span class="dam"><a href="index.php?page=product">Sản Phẩm</a></span>
                     </button>
-                    <div id="myDropdown" class="content">
-                        <a href="?page=product">Điện thoại</a>
-                        <a href="">Laptop</a>
-                        <a href="">Phụ kiện</a>
-                        <a href="">Đồng hồ thông minh</a>
-                        <a href="">Túi xách công nghệ</a>
-                        <a href="">Loa công nghệ di động</a>
-                    </div>
+
                 </div>
                 <div class="searchs">
                     <form action="" method="get">
@@ -64,7 +56,8 @@
                 ?>
             </nav><br><br><br>
             <div class="trangchudienthoai">
-                <span class="trangchu">Trang chủ</span> › <span class="dienthoai">Điện Thoại</span>
+                
+                <span class="trangchu"><a href="?page=home">Trang chủ</a></span> › <span class="dienthoai">Điện Thoại</span>
                 
             </div class="main-content">
                     
@@ -78,7 +71,6 @@
                             <div class="thuonghieu">DANH MỤC SẢN PHẨM</div>
                             <div class="containercheckboxdanhmuc">
                                 
-                                \\--------------
                                 <?php foreach ($categories as $cat): ?>
                                     <label class="checkbox-label">
                                         <input
@@ -135,29 +127,6 @@
                             <a href="?page=product&sort=desc" <?= isset($_GET['sort']) && $_GET['sort'] == 'desc' ? 'style="font-weight:bold;"' : '' ?>>Giá cao đến thấp</a>
 
                         </div>
-                        
-<?php for ($i = 0; $i < count($products); $i += 4): ?>
-        <div class="row">
-            <?php for ($j = $i; $j < $i + 4 && $j < count($products); $j++): ?>
-                <div class="product">
-                    <h3><?php echo htmlspecialchars($products[$j]['name']); ?></h3>
-                    <p>Giá: <?php echo number_format($products[$j]['price']); ?> đ</p>
-                </div>
-            <?php endfor; ?>
-        </div>
-    <?php endfor; ?>
-
-    <div class="pagination">
-        <?php
-$query = $_GET;
-for ($i = 1; $i <= $totalPages; $i++):
-    $query['p'] = $i;
-    $link = '?' . http_build_query($query);
-?>
-    <a href="<?= $link ?>" <?= ($i == $page) ? 'style="font-weight:bold;"' : '' ?>><?= $i ?></a>
-<?php endfor; ?>
-
-    </div>
 
                             <?php
                             foreach ($products as $img) {
@@ -188,6 +157,17 @@ for ($i = 1; $i <= $totalPages; $i++):
                                 <?php
                             }
                             ?>
+                            <div class="pagination">
+        <?php
+        $query = $_GET;
+        for ($i = 1; $i <= $totalPages; $i++):
+            $query['p'] = $i;
+            $link = '?' . http_build_query($query);
+        ?>
+            <a href="<?= $link ?>" <?= ($i == $page) ? 'style="font-weight:bold;"' : '' ?>><?= $i ?></a>
+        <?php endfor; ?>
+
+    </div>
 
                         <ul>
                             <?php foreach ($products as $product): ?>
@@ -206,15 +186,15 @@ for ($i = 1; $i <= $totalPages; $i++):
                 <script src="Views/js.js?v=12"></script>
     <script>
         function handleCategoryClick(checkbox) {
-            const params = new URLSearchParams(window.location.search);
-            if (checkbox.checked) {
-                params.set('category_id', checkbox.value);
-            } else {
-                params.delete('category_id');
+                const params = new URLSearchParams(window.location.search);
+                if (checkbox.checked) {
+                    params.set('category_id', checkbox.value);
+                } else {
+                    params.delete('category_id');
+                }
+                params.delete('p'); // reset về trang đầu
+                window.location.href = '?' + params.toString();
             }
-            params.delete('p'); // reset về trang đầu
-            window.location.href = '?' + params.toString();
-        }
 
     </script>
     <script>

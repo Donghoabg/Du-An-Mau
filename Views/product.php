@@ -1,5 +1,5 @@
     <link rel="stylesheet" href="views/css.css?v=22">
-    <link rel="stylesheet" href="views/products.css?v=1">
+    <link rel="stylesheet" href="views/products.css?v=12">
     <style>
         
 
@@ -158,28 +158,18 @@
                             }
                             ?>
                             <div class="pagination">
-        <?php
-        $query = $_GET;
-        for ($i = 1; $i <= $totalPages; $i++):
-            $query['p'] = $i;
-            $link = '?' . http_build_query($query);
-        ?>
-            <a href="<?= $link ?>" <?= ($i == $page) ? 'style="font-weight:bold;"' : '' ?>><?= $i ?></a>
-        <?php endfor; ?>
+                                <?php
+                                $query = $_GET;
+                                for ($i = 1; $i <= $totalPages; $i++):
+                                    $query['p'] = $i;
+                                    $link = '?' . http_build_query($query);
+                                ?>
+                                    <a href="<?= $link ?>" <?= ($i == $page) ? 'style="font-weight:bold;"' : '' ?>><?= $i ?></a>
+                                <?php endfor; ?>
 
-    </div>
+                            </div>
 
-                        <ul>
-                            <?php foreach ($products as $product): ?>
-                                <li>
-                                    <a href="?page=detail&id=<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></a>
-                                    (<?= number_format($product['price']) ?>đ)
-                                    | <a href="?page=edit_product&id=<?= $product['id'] ?>">Sửa</a>
-                                    | <a href="?page=delete_product&id=<?= $product['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
-                                    
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+                        
                     </div>     
                 </div>
                     

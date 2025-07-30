@@ -4,6 +4,7 @@
     }
 </style>
 <link rel="stylesheet" href="Views/css.css?v=2">
+<link rel="stylesheet" href="Views/products.?v=3">
 <?php
 ?>
 <div class="vien">
@@ -91,16 +92,17 @@
         <main>
             <div class="slider-wrapper">
             <div class="gallery" id="gallery">
+                
                 <?php
-                foreach ($images as $img) {
+                foreach ($productss as $product) {
                     ?>
                         <div class="box3">
                             <a href="?page=chitiet&id=<?= $img['id'] ?>">
                             <div class="box31">
-                                <img  src="<?=$img['image']?>" style="width: 178px;"   alt="">
-                                <?php
-                                echo $img['name'];
-                                ?>
+                                <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="178px">
+                                
+                                <?= htmlspecialchars($product['name']) ?>
+                                
                                 <div class="starss">
                                     <span class="star filled">&#9733;</span>
                                     <span class="star filled">&#9733;</span>
@@ -109,21 +111,21 @@
                                     <span class="star">&#9733;</span>
                                 </div>
                                 <?php
-                                if(isset($img['giamoi'])){
+                                if(isset($product['sale_price'])){
                                     ?>
-                                    <div class="giamoi"><?= number_format($img['giamoi'], 0 ,'', '.')?> đ</div>
+                                    <div class="sale_price"><?= number_format($product['sale_price'], 0 ,'', '.')?> đ</div>
                                     <div class="phantram2">
                                         <?php
-                                        $phantram = (($img['gia'] - $img['giamoi']) / $img['gia']) * 100;
+                                        $phantram = (($product['original_price'] - $product['sale_price']) / $product['original_price']) * 100;
                                         echo number_format($phantram, 0)  ;
                                         echo " %";
                                         ?>
                                     </div>
-                                    <div class="giacu"><?= number_format($img['gia'], 0 ,'', '.')?> đ</div>
+                                    <div class="giacu"><?= number_format($product['original_price'], 0 ,'', '.')?> đ</div>
                                     <?php
                                 }else{
                                     ?>
-                                    <div class="giamoi"><?= number_format($img['gia'], 0 ,'', '.')?> đ</div>
+                                    <div class="giamoi"><?= number_format($product['original_price'], 0 ,'', '.')?> đ</div>
                                     <?php
                                 }
                                 ?>
@@ -154,6 +156,8 @@
             <img src="images/banner7.jpg" height="100px" alt="">
             <img src="images/banner8.jpg" height="100px" alt="">
         </div>
+        
+
         <div class="dmsp">
             <h3>DANH MỤC SẢN PHẨM</h3>
         </div>
@@ -181,58 +185,55 @@
             <img src="images/20.png" alt="">
         </div>
         <div class="vuacohang">
-            <h3>SẢN PHẨM HOT</h3>
+            <h3>SẢN PHẨM</h3>
         </div>
-        <div class="containerbox3">
-            <?php
-            foreach($newproduct as $row){
-                ?>
-                <div class="box3">
-                    <a href="?page=chitiet2&id=<?= $row['id'] ?>">
-                    <div class="box31">
-                        <h4>NEW</h4>
-                        <img src="<?=$row['image']?>"  alt="">
-                        <?php
-                        echo $row['name'];
-                        ?>
-                        <div class="starss">
-                            <span class="star filled">&#9733;</span>
-                            <span class="star filled">&#9733;</span>
-                            <span class="star filled">&#9733;</span>
-                            <span class="star filled">&#9733;</span>
-                            <span class="star">&#9733;</span>
-                        </div>
-                        <?php
-                        if(isset($row['giamoi'])){
-                            ?>
-                            <div class="giamoi"><?= number_format($row['giamoi'], 0 ,'', '.')?> đ</div>
-                            <div class="phantram2">
-                                <?php
-                                $phantram = (($row['giacu'] - $img['giamoi']) / $row['giacu']) * 100;
-                                echo number_format($phantram, 0)  ;
-                                echo " %";
+        <?php
+                            foreach ($products as $img) {
                                 ?>
-                            </div>
-                            <div class="giacu"><?= number_format($row['giacu'], 0 ,'', '.')?> đ</div>
-                            <?php
-                        }else{
-                            ?>
-                            <div class="giamoi"><?= number_format($row['giacu'], 0 ,'', '.')?> đ</div>
-                            <?php
-                        }
-                        ?>
-                    </div>  
-                </a>
-                
-                </div>
-                    <?php
-                }
-                ?>
+                                <div class="newproduct">
+                                    <a href="?page=chitiet&id=<?= $img['id']  ?>">
+                                    
+                                        <img  src="<?=$img['image']?>">
+                                        <div class="name">
+                                            <?php
+                                            echo $img['name'];
+                                            ?>
 
-        </div>
+                                        </div>
+                                        <div class="starss">
+                                            <span class="star filled">&#9733;</span>
+                                            <span class="star filled">&#9733;</span>
+                                            <span class="star filled">&#9733;</span>
+                                            <span class="star filled">&#9733;</span>
+                                            <span class="star">&#9733;</span>
+                                        </div>
+                                        <div class="prices"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
+                                    </a>
+                                        <div class="boxdathang">
+                                            <a href="">Đặt Hàng</a>
+                                        </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            <div class="pagination">
+                                <?php
+                                $query = $_GET;
+                                for ($i = 1; $i <= $totalPages; $i++):
+                                    $query['p'] = $i;
+                                    $link = '?' . http_build_query($query);
+                                ?>
+                                    <a href="<?= $link ?>" <?= ($i == $page) ? 'style="font-weight:bold;"' : '' ?>><?= $i ?></a>
+                                <?php endfor; ?>
+
+                            </div>
+
     <div class="banner11">
         <img src="images/24.jpg.png" width="1419px" alt="">
     </div>
+    
+</div>
+
 </div>
 
     <?php

@@ -239,6 +239,10 @@
     color: #555555;
     text-decoration: none;
 }
+.trangchudienthoai a:hover{
+    color: black;
+    text-decoration: underline;
+}
 .boxdathang a:hover {
     background-color: #900000;
 }

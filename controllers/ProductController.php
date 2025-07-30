@@ -62,12 +62,19 @@ class ProductController {
         $this->model = new Database();
     }
     public function showHome() {
-    $images = $this->model->getproductsale(); // sản phẩm khuyến mãi
-    $keyword = $_GET['keyword'] ?? '';
-    $products = $this->model->searchProducts(0, $keyword, null, null); // lấy toàn bộ sản phẩm theo keyword
-    include __DIR__ . '/../Views/home.php';
-    exit;
-}
+        $model = new Database();
+        $productss = $model->getSaleProducts();
+
+        $limit = 8;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        if ($page < 1) $page = 1;
+        $offset = ($page - 1) * $limit;
+        $products = $model->getProducts($limit, $offset);
+        $total = $model->getTotalProducts();
+        $totalPages = ceil($total / $limit);
+        include __DIR__ . '/../Views/home.php';
+        exit;
+    }
 
 public function product() {
     $sort = $_GET['sort'] ?? '';

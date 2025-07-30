@@ -16,12 +16,7 @@ class Database{
                 die("Lỗi kết nối: " . $e->getMessage());
             }
     }
-    public function getproductsale() {
-    $sql = "SELECT * FROM sale";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    
 
     public function RegisterModel($username, $password) {
     $role = 'user';
@@ -54,12 +49,6 @@ class Database{
 
     }
     
-    public function ProductsSaleModel(){
-        $sql = "SELECT * FROM sale";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
     // Sản phẩm
     
     public function getProductById($id) {
@@ -80,68 +69,68 @@ class Database{
         return $stmt->execute([$id]);
     }
     public function searchProducts($category_id, $keyword, $min_price, $max_price, $sort = '', $limit = null, $offset = null) {
-    $sql = "SELECT * FROM products WHERE 1=1";
-    $count_sql = "SELECT COUNT(*) FROM products WHERE 1=1";
-    $params = [];
-    $count_params = [];
+        $sql = "SELECT * FROM products WHERE 1=1";
+        $count_sql = "SELECT COUNT(*) FROM products WHERE 1=1";
+        $params = [];
+        $count_params = [];
 
-    if (!empty($category_id)) {
-        $sql .= " AND category_id = ?";
-        $count_sql .= " AND category_id = ?";
-        $params[] = $category_id;
-        $count_params[] = $category_id;
+        if (!empty($category_id)) {
+            $sql .= " AND category_id = ?";
+            $count_sql .= " AND category_id = ?";
+            $params[] = $category_id;
+            $count_params[] = $category_id;
+        }
+
+        if (!empty($keyword)) {
+            $sql .= " AND name LIKE ?";
+            $count_sql .= " AND name LIKE ?";
+            $params[] = "%$keyword%";
+            $count_params[] = "%$keyword%";
+        }
+
+        if (is_numeric($min_price)) {
+            $sql .= " AND price >= ?";
+            $count_sql .= " AND price >= ?";
+            $params[] = $min_price;
+            $count_params[] = $min_price;
+        }
+
+        if (is_numeric($max_price)) {
+            $sql .= " AND price <= ?";
+            $count_sql .= " AND price <= ?";
+            $params[] = $max_price;
+            $count_params[] = $max_price;
+        }
+
+        // Sắp xếp
+        if ($sort === 'asc') {
+            $sql .= " ORDER BY price ASC";
+        } elseif ($sort === 'desc') {
+            $sql .= " ORDER BY price DESC";
+        } elseif ($sort === 'new') {
+            $sql .= " ORDER BY id DESC"; // hoặc created_at nếu có
+        }
+
+        // Thêm LIMIT và OFFSET nếu có
+        // Thêm LIMIT và OFFSET nếu có
+    if ($limit !== null && $offset !== null) {
+        $sql .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
     }
 
-    if (!empty($keyword)) {
-        $sql .= " AND name LIKE ?";
-        $count_sql .= " AND name LIKE ?";
-        $params[] = "%$keyword%";
-        $count_params[] = "%$keyword%";
-    }
+    // Lấy danh sách sản phẩm
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params); // chỉ chứa các điều kiện lọc
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if (is_numeric($min_price)) {
-        $sql .= " AND price >= ?";
-        $count_sql .= " AND price >= ?";
-        $params[] = $min_price;
-        $count_params[] = $min_price;
-    }
+    // Lấy tổng số sản phẩm phù hợp
+    $stmt_count = $this->pdo->prepare($count_sql);
+    $stmt_count->execute($count_params);
+    $total = $stmt_count->fetchColumn();
 
-    if (is_numeric($max_price)) {
-        $sql .= " AND price <= ?";
-        $count_sql .= " AND price <= ?";
-        $params[] = $max_price;
-        $count_params[] = $max_price;
-    }
-
-    // Sắp xếp
-    if ($sort === 'asc') {
-        $sql .= " ORDER BY price ASC";
-    } elseif ($sort === 'desc') {
-        $sql .= " ORDER BY price DESC";
-    } elseif ($sort === 'new') {
-        $sql .= " ORDER BY id DESC"; // hoặc created_at nếu có
-    }
-
-    // Thêm LIMIT và OFFSET nếu có
-    // Thêm LIMIT và OFFSET nếu có
-if ($limit !== null && $offset !== null) {
-    $sql .= " LIMIT " . (int)$limit . " OFFSET " . (int)$offset;
-}
-
-// Lấy danh sách sản phẩm
-$stmt = $this->pdo->prepare($sql);
-$stmt->execute($params); // chỉ chứa các điều kiện lọc
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Lấy tổng số sản phẩm phù hợp
-$stmt_count = $this->pdo->prepare($count_sql);
-$stmt_count->execute($count_params);
-$total = $stmt_count->fetchColumn();
-
-return [
-    'products' => $products ?? [],
-    'total' => $total ?? 0
-];
+    return [
+        'products' => $products ?? [],
+        'total' => $total ?? 0
+    ];
     }
 
     //
@@ -181,9 +170,11 @@ return [
         $stmt = $this->pdo->query("SELECT COUNT(*) FROM products");
         return $stmt->fetchColumn();
     }
-
-
-
-
-
+    public function getSaleProducts() {
+            $sql = "SELECT p.id, p.name, p.image, p.price AS original_price, s.sale_price
+                    FROM sale_products s
+                    JOIN products p ON s.product_id = p.id";
+            $stmt = $this->pdo->query($sql);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 }

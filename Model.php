@@ -1,5 +1,7 @@
 <?php
 class Database{
+    private $db;
+    private $itemsPerPage = 8;
     protected $pdo;
     public function __construct(){
         $host = "localhost";
@@ -59,10 +61,7 @@ class Database{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     // Sản phẩm
-    public function getAllProducts() {
-        $stmt = $this->pdo->query("SELECT * FROM products");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    
     public function getProductById($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM products WHERE id = ?");
         $stmt->execute([$id]);
@@ -140,6 +139,18 @@ class Database{
     public function deleteCategory($id) {
         $stmt = $this->pdo->prepare("DELETE FROM categories WHERE id = ?");
         return $stmt->execute([$id]);
+    }
+    public function getProducts($limit, $offset) {
+        $stmt = $this->pdo->prepare("SELECT * FROM products LIMIT :limit OFFSET :offset");
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTotalProducts() {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM products");
+        return $stmt->fetchColumn();
     }
 
 

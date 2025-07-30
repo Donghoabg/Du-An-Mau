@@ -71,15 +71,27 @@ class ProductController {
 
 
     public function product() {
-            $sort = $_GET['sort'] ?? '';
+        $model = new Database();
 
-        $categories = $this->model->getAllCategories();
-        $category_id = $_GET['category_id'] ?? 0;
-        $keyword = $_GET['keyword'] ?? '';
-        $min_price = $_GET['min_price'] ?? null;
-        $max_price = $_GET['max_price'] ?? null;
-        $products = $this->model->searchProducts($category_id, $keyword, $min_price, $max_price, $sort);
-        include __DIR__ . '/../views/product.php';
+    $limit = 8;
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    if ($page < 1) $page = 1;
+
+    $offset = ($page - 1) * $limit;
+
+    $sort = $_GET['sort'] ?? '';
+    $category_id = $_GET['category_id'] ?? 0;
+    $keyword = $_GET['keyword'] ?? '';
+    $min_price = $_GET['min_price'] ?? null;
+    $max_price = $_GET['max_price'] ?? null;
+
+    $products = $model->getProducts($limit, $offset, $sort, $category_id, $keyword, $min_price, $max_price);
+    $total = $model->getTotalProducts($category_id, $keyword, $min_price, $max_price); // Cũng nên áp dụng bộ lọc
+    $totalPages = ceil($total / $limit);
+
+    $categories = $model->getAllCategories();
+
+    include 'views/products/index.php';
     }
 
     public function showAddCategoryForm() {

@@ -158,4 +158,12 @@
     color: #BD0000;
     border-bottom: 3px solid #BD0000;
 }
+.containerproduct{
+    width: 240px;
+    height: 410px;
+}
+.containerproduct img{
+    width: 198px;
+    height: 198px;
+}
 

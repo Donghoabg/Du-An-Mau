@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="views/css.css?v=12">
-<link rel="stylesheet" href="views/products.css?v=12">
+<link rel="stylesheet" href="views/css.css?v=2">
+<link rel="stylesheet" href="views/products.css?v=3">
 <style>
     
 
@@ -142,7 +142,7 @@
                                 <div class="boxproduct">
                                     <a href="?page=chitiet&id=<?= $img['id'] ?>">
                                     <div class="box31">
-                                        <img  src="<?=$img['image']?>" style="width: 178px;"   alt="">
+                                        <img  src="<?=$img['image']?>" style="width: 178px;"alt="">
                                         <?php
                                         echo $img['name'];
                                         ?>
@@ -153,25 +153,8 @@
                                             <span class="star filled">&#9733;</span>
                                             <span class="star">&#9733;</span>
                                         </div>
-                                        <?php
-                                        if(isset($img['giamoi'])){
-                                            ?>
-                                            <div class="giamoi"><?= number_format($img['giamoi'], 0 ,'', '.')?> đ</div>
-                                            <div class="phantram2">
-                                                <?php
-                                                $phantram = (($img['gia'] - $img['giamoi']) / $img['gia']) * 100;
-                                                echo number_format($phantram, 0)  ;
-                                                echo " %";
-                                                ?>
-                                            </div>
-                                            <div class="giacu"><?= number_format($img['gia'], 0 ,'', '.')?> đ</div>
-                                            <?php
-                                        }else{
-                                            ?>
-                                            <div class="giamoi"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
-                                            <?php
-                                        }
-                                        ?>
+                                        <div class="giamoi"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
+                                        
                                     </a>
 
                                 </div>

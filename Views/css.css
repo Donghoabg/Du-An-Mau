@@ -243,7 +243,7 @@ nav{
 .slider-wrapper {
     position: relative;
     overflow: hidden;
-    width: 1400px;
+    width: 1100px;
     margin: auto;
     height: 400px;
 }
@@ -252,13 +252,13 @@ nav{
     display: flex;
     transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
     will-change: transform;
-    width: max-content;
+    width: max-content; /* Tự động theo số sản phẩm */
     height: 400px;
 }
 
 .box3 {
-    min-width: 233px;
-    max-width: 233px;
+    min-width: 220px;
+    max-width: 220px;
     box-sizing: border-box;
     height: 400px;
 }
@@ -293,12 +293,9 @@ button:last-child {
     margin-left: 20px;
 }
 .starss {
-    margin-top: 0px;
-    position: static;
+    margin-top: 20px;
+    position: relative;
     font-size: 19px;
-    display: flex;
-    align-items: flex-start;
-    margin-left: 0px;
 }
 
 

@@ -10,11 +10,22 @@
     flex-wrap: wrap;
     gap: 10px; /* rút khoảng cách giữa các item */
 }
+.new{
+    background-color: #CB0000;
+    margin: 10px;
+    padding: 2px;
+    border-radius: 3px;
+    color: white;
+    position: absolute;
+    font-size: 9px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
 
 
     
 </style>
-<link rel="stylesheet" href="Views/css.css?v=2">
+<link rel="stylesheet" href="Views/css.css?v=1">
 <link rel="stylesheet" href="Views/products.css?v=3">
 <?php
 ?>
@@ -101,67 +112,43 @@
             <h3>GIÁ SỐC HÔM NAY ⚡</h3>
         </div>
         <main>
-            <div class="slider-wrapper">
-            <div class="gallery" id="gallery">
-                
-                <?php
-                foreach ($productss as $product) {
-                    ?>
-                        <div class="box3">
-                            <a href="?page=chitiet&id=<?= $img['id'] ?>">
-                            <div class="box31">
-                                <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="178px">
-                                
-                                <?= htmlspecialchars($product['name']) ?><br>
-                                
-                                <div class="starss">
-                                    <span class="star filled">&#9733;</span>
-                                    <span class="star filled">&#9733;</span>
-                                    <span class="star filled">&#9733;</span>
-                                    <span class="star filled">&#9733;</span>
-                                    <span class="star">&#9733;</span>
-                                </div>
+            
+<div class="slider-wrapper">
+    <button class="slinesale" onclick="prevGroup()"><img src="images/nutchuyen4.png" height="20px" alt=""></button>
+    <div class="gallery" id="gallery">
+        <?php foreach ($productss as $product): ?>
+            <div class="box3">
+                <a href="?page=chitiet&id=<?= $product['id'] ?>">
+                    <div class="box31">
+                        <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" width="178px">
+                        <?= htmlspecialchars($product['name']) ?><br>
+                        <div class="starss">
+                            <span class="star filled">&#9733;</span>
+                            <span class="star filled">&#9733;</span>
+                            <span class="star filled">&#9733;</span>
+                            <span class="star filled">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                        </div>
+                        <?php if(isset($product['sale_price'])): ?>
+                            <div class="sale_price"><?= number_format($product['sale_price'], 0 ,'', '.')?> đ</div>
+                            <div class="phantram2">
                                 <?php
-                                if(isset($product['sale_price'])){
-                                    ?>
-                                    <div class="sale_price"><?= number_format($product['sale_price'], 0 ,'', '.')?> đ</div>
-                                    <div class="phantram2">
-                                        <?php
-                                        $phantram = (($product['original_price'] - $product['sale_price']) / $product['original_price']) * 100;
-                                        echo number_format($phantram, 0)  ;
-                                        echo " %";
-                                        ?>
-                                    </div>
-                                    <div class="giacu"><?= number_format($product['original_price'], 0 ,'', '.')?> đ</div>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <div class="giamoi"><?= number_format($product['original_price'], 0 ,'', '.')?> đ</div>
-                                    <?php
-                                }
+                                $phantram = (($product['original_price'] - $product['sale_price']) / $product['original_price']) * 100;
+                                echo number_format($phantram, 0)  ;
+                                echo " %";
                                 ?>
-                            </a>
-
                             </div>
-                            <?php
-                            if($_SESSION['role'] === 'admin'){
-                                ?>
-                            <div class="suaxoa">
-                                <a  href="?page=editproduct&id=<?=$img['id']?>">Sửa</a>
-                                <a href="?page=delete&id=<?=$img['id']?>">Delete</a>
-                            </div>
-                            <?php
-                            }
-                            ?>
-                </div>
-                    
-                    <?php
-                }
-                ?>
+                            <div class="giacu"><?= number_format($product['original_price'], 0 ,'', '.')?> đ</div>
+                        <?php else: ?>
+                            <div class="giamoi"><?= number_format($product['original_price'], 0 ,'', '.')?> đ</div>
+                        <?php endif; ?>
+                    </div>
+                </a>
             </div>
-            <button class="slinesale" onclick="prevImage()"><img src="images/nutchuyen4.png" height="20px" alt=""></button>
-            <button class="slinesale" onclick="nextImage()"><img src="images/nutchuyen3.png" height="20px" alt=""></button>
-        </div>
+        <?php endforeach; ?>
+    </div>
+    <button class="slinesale" onclick="nextGroup()"><img src="images/nutchuyen3.png" height="20px" alt=""></button>
+</div>
         <div class="banner578">
             <img src="images/banner5.jpg" height="100px" alt="">
             <img src="images/banner7.jpg" height="100px" alt="">
@@ -204,6 +191,7 @@
             foreach ($products as $img) {
                 ?>
                 <div class="newproduct">
+                    <span class="new">NEW</span>
                     <a href="?page=chitiet&id=<?= $img['id']  ?>">
                     
                         <img  src="<?=$img['image']?>">
@@ -256,6 +244,58 @@
     include 'layout/footer.html';
     ?>
     <script>
-    const totalImages = <?php echo count($images); ?>;
+    // Slider GIÁ SỐC HÔM NAY
+    document.addEventListener("DOMContentLoaded", function () {
+        const gallery = document.getElementById("gallery");
+        if (gallery) {
+            const items = gallery.querySelectorAll(".box3");
+            const visibleCount = 5;
+            const itemWidth = 220;
+            let groupIndex = 0;
+            const totalItems = items.length;
+            const maxGroup = Math.ceil(totalItems / visibleCount);
+            function updateSlide() {
+                const translateX = -groupIndex * visibleCount * itemWidth;
+                gallery.style.transform = `translateX(${translateX}px)`;
+                gallery.style.transition = "transform 0.5s ease";
+            }
+            window.nextGroup = function () {
+                if (groupIndex < maxGroup - 1) {
+                    groupIndex++;
+                } else {
+                    groupIndex = 0;
+                }
+                updateSlide();
+            }
+            window.prevGroup = function () {
+                if (groupIndex > 0) {
+                    groupIndex--;
+                } else {
+                    groupIndex = maxGroup - 1;
+                }
+                updateSlide();
+            }
+            updateSlide();
+        }
+
+        // Slider cho banner
+        const banner = document.querySelector('.banner');
+        if (banner) {
+            const images = banner.querySelectorAll('.banner-image');
+            let bannerIndex = 0;
+            const totalBanner = images.length;
+            function updateBanner() {
+                const translateX = -bannerIndex * 1100;
+                banner.style.transform = `translateX(${translateX}px)`;
+                banner.style.transition = "transform 0.5s ease";
+            }
+            window.moveBanner = function(n) {
+                bannerIndex += n;
+                if (bannerIndex >= totalBanner) bannerIndex = 0;
+                if (bannerIndex < 0) bannerIndex = totalBanner - 1;
+                updateBanner();
+            }
+            updateBanner();
+        }
+    });
     </script>
-<script src="Views/js.js?v=12"></script>

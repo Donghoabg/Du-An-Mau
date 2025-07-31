@@ -1,7 +1,17 @@
     <link rel="stylesheet" href="views/css.css?v=22">
     <link rel="stylesheet" href="views/products.css?v=3">
     <style>
-        
+        .new{
+    background-color: #CB0000;
+    margin: 10px;
+    padding: 2px;
+    border-radius: 3px;
+    color: white;
+    position: absolute;
+    font-size: 9px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
 
     </style>
     <div class="vien">
@@ -133,6 +143,7 @@
                             foreach ($products as $img) {
                                 ?>
                                     <div class="newproduct">
+                                        <span class="new">NEW</span>
                                         <a href="?page=chitiet&id=<?= $img['id']  ?>">
                                         
                                             <img  src="<?=$img['image']?>">

@@ -207,9 +207,8 @@ nav{
     font-size: 20px;
     border-radius: 5px;
   }
-.banner4{
 
-}
+
 .banner4 img{ 
     width: 300px;
     margin-left: 11px;
@@ -240,20 +239,29 @@ nav{
 }
 
 
+
 .slider-wrapper {
-    width: 100%;
-    overflow: hidden;
-    margin-bottom: 10px;
     position: relative;
+    overflow: hidden;
+    width: 1400px;
+    margin: auto;
+    height: 400px;
 }
 
 .gallery {
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform;
+    width: max-content;
+    height: 400px;
 }
 
-
-
+.box3 {
+    min-width: 233px;
+    max-width: 233px;
+    box-sizing: border-box;
+    height: 400px;
+}
 .slinesale {
     top: 36%;
     font-size: 20px;
@@ -285,9 +293,12 @@ button:last-child {
     margin-left: 20px;
 }
 .starss {
-    margin-top: 20px;
-    position: relative;
+    margin-top: 0px;
+    position: static;
     font-size: 19px;
+    display: flex;
+    align-items: flex-start;
+    margin-left: 0px;
 }
 
 
@@ -440,6 +451,8 @@ color: #DB0002;
     height: 400px;
     padding: 30px;
     padding-top: 40px;
+        min-width: 220px;
+
 }
 .box3 a{
     font-weight: 380;

@@ -26,47 +26,48 @@ function toggleMenu() {
     });
 
     function moveBanner(direction) {
-      const images = document.querySelectorAll(".banner-image");
-      const totalImages = images.length;
-      const imageWidth = 1100;
+      // Khởi động slider sau khi DOM load
+// ...existing code...
 
-      currentIndex += direction;
-
-      if (currentIndex < 0) {
-        currentIndex = totalImages - 1;
-      } else if (currentIndex >= totalImages) {
-        currentIndex = 0;
-      }
-
-      const newTransform = -currentIndex * imageWidth;
-      document.querySelector(".banner").style.transform = `translateX(${newTransform}px)`;
-    }
+// Slider "GIÁ SỐC HÔM NAY" - chỉ chạy một lần khi DOM ready
+document.addEventListener("DOMContentLoaded", function () {
     const gallery = document.getElementById("gallery");
-    const imageWidth = 283; 
-    const visibleCount = 5;
-    let startIndex = 0;
-    
+    if (!gallery) return;
+
+    const items = gallery.querySelectorAll(".box3");
+    const visibleCount = 5; // Số sản phẩm hiển thị mỗi lần (đổi thành 6 nếu muốn)
+    const itemWidth = 220;   // Đúng với CSS min-width của .box3
+    let groupIndex = 0;
+    const totalItems = items.length;
+    const maxGroup = Math.ceil(totalItems / visibleCount);
+
     function updateSlide() {
-        const translateX = -startIndex * imageWidth;
+        const translateX = -groupIndex * visibleCount * itemWidth;
         gallery.style.transform = `translateX(${translateX}px)`;
+        gallery.style.transition = "transform 0.5s ease";
     }
-    
-    function nextImage() {
-        if (startIndex + visibleCount < totalImages) {
-            startIndex++;
+
+    window.nextGroup = function () {
+        if (groupIndex < maxGroup - 1) {
+            groupIndex++;
         } else {
-            startIndex = 0; // quay lại đầu
+            groupIndex = 0;
         }
         updateSlide();
     }
-    
-    function prevImage() {
-        if (startIndex > 0) {
-            startIndex--;
+
+    window.prevGroup = function () {
+        if (groupIndex > 0) {
+            groupIndex--;
         } else {
-            startIndex = totalImages - visibleCount;
+            groupIndex = maxGroup - 1;
         }
         updateSlide();
     }
-    
-    
+
+    updateSlide();
+});
+
+// ...existing code...
+
+    }

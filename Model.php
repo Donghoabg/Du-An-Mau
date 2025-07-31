@@ -35,19 +35,20 @@ class Database{
         return $stmt->rowCount() > 0;
     }
 
-    public function LoginModel($username, $password){
-        $sql = "SELECT * FROM users WHERE username = :username AND password = :password";
-        $stmt= $this->pdo->prepare($sql);
-        $stmt->bindParam(":username", $username);
-        $stmt->bindParam(":password", $password);
-        $stmt->execute();
-        if($stmt->fetch(PDO::FETCH_ASSOC)){
-            return true;
-        }else{
-            return false;
-        }
+    public function LoginModel($username, $password) {
+    $sql = "SELECT * FROM users WHERE username = :username AND password = :password";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password); // Nên mã hóa mật khẩu bằng hash
+    $stmt->execute();
 
+    if ($stmt->rowCount() === 1) {
+        return $stmt->fetch(PDO::FETCH_ASSOC); // trả về thông tin user gồm cả role
+    } else {
+        return false;
     }
+}
+
     
     // Sản phẩm
     

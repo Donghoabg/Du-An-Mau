@@ -39,22 +39,32 @@ class ProductController {
 
 
     public function ControllerLogin() {
-        include 'Views/Login.php';
-        if (isset($_POST['login'])) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            $login = new Database();
-            
-            if ($login->LoginModel($username, $password) === true) {
-                session_start();
-                $_SESSION['username'] = $username;
-                header('Location: index.php?page=home');
-                exit();
+    include 'Views/Login.php';
+
+    if (isset($_POST['login'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $login = new Database();
+
+        // Lấy thông tin người dùng (gồm role) từ LoginModel
+        $user = $login->LoginModel($username, $password);
+
+        if ($user) {
+            session_start();
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role']; // lưu role vào session
+
+            if ($user['role'] === 'admin') {
+                header('Location: Views/admin.php');
             } else {
-                echo "Sai tên đăng nhập hoặc mật khẩu";
+                header('Location: index.php?page=home');
             }
+            exit();
+        } else {
+            echo "Sai tên đăng nhập hoặc mật khẩu";
         }
     }
+}
 
     private $model;
 

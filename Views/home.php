@@ -211,7 +211,7 @@
                         <div class="prices"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
                     </a>
                         <div class="boxdathang">
-                            <a href="">Đặt Hàng</a>
+                            <a href="index.php?page=add&id=<?= $img['id'] ?>">Thêm Giỏ Hàng</a>
                         </div>
                 </div>
                 <?php

@@ -1,5 +1,5 @@
 <?php
-require_once 'Model.php';
+require_once(__DIR__ . '/../Model.php');
 
 class ProductController {
     
@@ -87,7 +87,7 @@ class ProductController {
     }
 
 public function product() {
-    $sort = $_GET['sort'] ?? '';p
+    $sort = $_GET['sort'] ?? '';
     $category_id = $_GET['category_id'] ?? 0;
     $keyword = $_GET['keyword'] ?? '';
     $min_price = $_GET['min_price'] ?? null;
@@ -181,6 +181,13 @@ public function product() {
     public function showDetail() {
         $product = $this->model->getProductById($_GET['id']);
         include __DIR__ . '/../views/detail.php';
+    }
+    public function delete() {
+        $id = $_GET['id'] ?? 0;
+        $model = new Database();
+        $model->delete($id);
+        header('Location: admin.php');
+        exit;
     }
 }
 ?>

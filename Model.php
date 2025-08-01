@@ -178,4 +178,11 @@ class Database{
             $stmt = $this->pdo->query($sql);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+    public function delete($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM products WHERE id = ?");
+        $stmt->execute([$id]);
+    } 
+        
+        
+
 }

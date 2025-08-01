@@ -5,6 +5,7 @@ if (!isset($_COOKIE['username']) || !isset($_COOKIE['password'])) {
     exit;
 }
 
-require_once '/controllers/OrderController.php';
-(new OrderController())->admin();
+require_once __DIR__ . '/../controllers/OrderController.php';
+
+    (new OrderController())->admin();
 ?>

@@ -87,7 +87,7 @@ class ProductController {
     }
 
 public function product() {
-    $sort = $_GET['sort'] ?? '';
+    $sort = $_GET['sort'] ?? '';p
     $category_id = $_GET['category_id'] ?? 0;
     $keyword = $_GET['keyword'] ?? '';
     $min_price = $_GET['min_price'] ?? null;

@@ -20,7 +20,7 @@ class Database{
 
     public function RegisterModel($username, $password) {
     $role = 'user';
-    $sql = "INSERT INTO user (username, `password`, role) VALUES (:username, :password, :role)";
+    $sql = "INSERT INTO users (username, `password`, role) VALUES (:username, :password, :role)";
     $stmt = $this->pdo->prepare($sql);
     $stmt->bindParam(":username", $username);
     $stmt->bindParam(":password", $password);
@@ -30,7 +30,7 @@ class Database{
     
 
     public function CheckUserExists($username) {
-        $stmt = $this->pdo->prepare("SELECT * FROM user WHERE username = ?");
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->execute([$username]);
         return $stmt->rowCount() > 0;
     }
@@ -181,7 +181,16 @@ class Database{
     public function delete($id) {
         $stmt = $this->pdo->prepare("DELETE FROM products WHERE id = ?");
         $stmt->execute([$id]);
-    } 
+    }
+    public function addToCart($user_id, $product_id, $quantity) {
+        $stmt = $this->pdo->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, ?)");
+        $stmt->execute([$user_id, $product_id, $quantity]);
+    }
+    public function getCartItems($user_id) {
+        $stmt = $this->pdo->prepare("SELECT c.*, p.name, p.price FROM cart c JOIN products p ON c.product_id = p.id WHERE c.user_id = ?");
+        $stmt->execute([$user_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
         
         
 

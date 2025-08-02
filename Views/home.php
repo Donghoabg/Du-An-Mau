@@ -71,7 +71,7 @@
                 <span class="sdt">0345.888.999</span>
             </div>
             <div class="giohang">
-                <a href="?page=giohang"><img src="images/giohang.jpg" alt="" height="70px"></a>
+                <a href="index.php?page=cart"><img src="images/giohang.jpg" alt="" height="70px"></a>
             </div>
             <?php
             

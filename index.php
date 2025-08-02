@@ -57,11 +57,19 @@ switch ($action) {
     case 'product':
         $controller->product();
         break;
-    
+    case 'add':
+        $controller->add();
+        break;
+    case 'cart':
+        $controller->view();
+        break;
+    case 'quanlydanhmuc':
+        $controller->quanlydanhmuc();
+        break;
     
 
     default:
-        echo "404 - Không tìm thấy tran.";
+        
 
 }
 ?>

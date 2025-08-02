@@ -6,6 +6,8 @@ require_once 'db.php';
 $pdo = DB::connect();
 $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<a href="../index.php?page=add_category">Thêm danh mục</a>
+
 <h2>Quản lý sản phẩm đang có</h2>
 <a href="add_product.php">Thêm sản phẩm mới</a>
 <table border="1" cellpadding="5">

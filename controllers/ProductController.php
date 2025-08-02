@@ -109,6 +109,12 @@ public function product() {
     // Truyền đúng biến sang view
     include __DIR__ . '/../Views/product.php';
 }
+    public function quanlydanhmuc() {
+        $model = new Database();
+        $categories = $model->getAllCategories();
+        include __DIR__ . '/../Views/quanlydanhmuc.php';
+
+    }
 
     
 
@@ -117,12 +123,18 @@ public function product() {
     }
 
     public function saveCategory() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->model->addCategory($_POST['name']);
-            header("Location: index.php");
-            exit;
-        }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $this->model->addCategory($_POST['name']);
+
+        // Lưu thông báo vào session
+        $_SESSION['message'] = 'Thêm danh mục thành công!';
+
+        // Chuyển hướng về lại trang form
+        header("Location: index.php?page=add_category");
+        exit;
     }
+}
+
 
     public function showEditCategoryForm() {
         $id = $_GET['id'];
@@ -188,6 +200,17 @@ public function product() {
         $model->delete($id);
         header('Location: admin.php');
         exit;
+    }
+    public function add() {
+        $this->model->addToCart(1, $_GET['id'], 1); // user_id = 1
+        echo "<script>
+        alert('Đã thêm vào giỏ hàng!');
+        window.location.href = 'index.php?page=home';
+    </script>";
+    }
+    public function view() {
+        $items = $this->model->getCartItems(1); // user_id = 1 tạm thời
+        include 'views/cart.php';
     }
 }
 ?>

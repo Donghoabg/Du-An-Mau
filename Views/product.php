@@ -185,6 +185,45 @@
                         
                     </div>     
                 </div>
+                <h2>Danh mục</h2>
+<ul>
+    <?php foreach ($categories as $cat): ?>
+        <li>
+            <a href="?category_id=<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></a>
+            | <a href="?action=edit_category&id=<?= $cat['id'] ?>">Sửa</a>
+            | <a href="?action=delete_category&id=<?= $cat['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
+        </li>
+    <?php endforeach; ?>
+</ul>
+<a href="index.php?page=add_category">Thêm danh mục</a>
+
+<hr>
+
+<h2>Lọc sản phẩm</h2>
+<form method="get">
+    <input type="hidden" name="category_id" value="<?= $category_id ?>">
+    <input type="text" name="keyword" placeholder="Từ khóa" value="<?= htmlspecialchars($keyword) ?>">
+    <input type="number" name="min_price" placeholder="Giá từ" value="<?= htmlspecialchars($min_price) ?>">
+    <input type="number" name="max_price" placeholder="Đến" value="<?= htmlspecialchars($max_price) ?>">
+    <button type="submit">Lọc</button>
+</form>
+
+<a href="?page=add_product">Thêm sản phẩm</a>
+
+<h2>Sản phẩm</h2>
+<ul>
+    <?php foreach ($products as $product): ?>
+        <li>
+            <a href="?action=detail&id=<?= $product['id'] ?>"><?= htmlspecialchars($product['name']) ?></a>
+            (<?= number_format($product['price']) ?>đ)
+            | <a href="?action=edit_product&id=<?= $product['id'] ?>">Sửa</a>
+            | <a href="?action=delete_product&id=<?= $product['id'] ?>" onclick="return confirm('Xóa?')">Xóa</a>
+        </li>
+    <?php endforeach; ?>
+</ul>
+
+
+
                     
                 <script src="Views/js.js?v=12"></script>
     <script>

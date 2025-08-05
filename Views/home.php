@@ -21,7 +21,9 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
 }
-
+<?php
+            session_start();
+?>
 
     
 </style>
@@ -188,6 +190,8 @@
         <div class="product-list product-list-tight">
 
         <?php
+
+
             foreach ($products as $img) {
                 ?>
                 <div class="newproduct">
@@ -210,6 +214,7 @@
                         </div>
                         <div class="prices"><?= number_format($img['price'], 0 ,'', '.')?> đ</div>
                     </a>
+                    
                         <div class="boxdathang">
                             <a href="index.php?page=add&id=<?= $img['id'] ?>">Thêm Giỏ Hàng</a>
                         </div>

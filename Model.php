@@ -43,7 +43,8 @@ class Database{
     $stmt->execute();
 
     if ($stmt->rowCount() === 1) {
-        return $stmt->fetch(PDO::FETCH_ASSOC); // trả về thông tin user gồm cả role
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+     // trả về thông tin user gồm cả role
     } else {
         return false;
     }
@@ -191,6 +192,23 @@ class Database{
         $stmt->execute([$user_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function deleteItem($user_id, $product_id) {
+    $sql = "DELETE FROM cart WHERE user_id = :user_id AND product_id = :product_id";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([
+        ':user_id' => $user_id,
+        ':product_id' => $product_id
+    ]);
+}
+public function updateQuantity($user_id, $product_id, $quantity) {
+        $stmt = $this->pdo->prepare("UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?");
+        $stmt->execute([$quantity, $user_id, $product_id]);
+    }   
+    public function clearCart($user_id) {
+        $stmt = $this->pdo->prepare("DELETE FROM cart WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+    }
+
         
         
 

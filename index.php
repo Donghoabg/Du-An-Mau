@@ -1,8 +1,11 @@
 <?php
 session_start();
 require_once 'controllers/ProductController.php';
-
+require_once 'controllers/UserController.php';
+require_once 'controllers/OrderController.php';
+$orderController = new OrderController();
 $controller = new ProductController();
+$ctrl = new UserController();
 $action = $_GET['page'] ?? 'guest';
 
 switch ($action) {
@@ -63,9 +66,36 @@ switch ($action) {
     case 'cart':
         $controller->view();
         break;
+    case 'order':
+        $controller->order();
+        break;
+    case 'update_cart':
+        $controller->update_cart();
+        break;
+    case 'delete_cart':
+        $controller->deleteCartItem();
+        break;
     case 'quanlydanhmuc':
         $controller->quanlydanhmuc();
         break;
+    case 'list_users': $ctrl->list(); 
+        break;
+    case 'add_user': $ctrl->add(); 
+        break;
+    case 'save_add_user': $ctrl->saveAdd(); 
+            break;
+    case 'edit_user': $ctrl->edit(); 
+        break;
+    case 'save_edit_user': $ctrl->saveEdit(); 
+        break;
+    case 'delete_user': $ctrl->delete(); 
+        break;
+    case 'deletee':
+        $orderController->deletee();
+        break;
+    case 'chitiet';
+        $controller->chitiet();
+        break;  
     
 
     default:

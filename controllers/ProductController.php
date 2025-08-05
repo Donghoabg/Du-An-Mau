@@ -1,6 +1,5 @@
 <?php
 require_once(__DIR__ . '/../Model.php');
-
 class ProductController {
     
 
@@ -50,7 +49,7 @@ class ProductController {
         $user = $login->LoginModel($username, $password);
 
         if ($user) {
-            session_start();
+            $_SESSION['id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role']; // lưu role vào session
 
@@ -112,6 +111,7 @@ public function product() {
     public function quanlydanhmuc() {
         $model = new Database();
         $categories = $model->getAllCategories();
+
         include __DIR__ . '/../Views/quanlydanhmuc.php';
 
     }
@@ -153,7 +153,8 @@ public function product() {
 
     public function deleteCategory() {
         $this->model->deleteCategory($_GET['id']);
-        header("Location: index.php");
+        $_SESSION['messagee'] = 'Xóa thành công';
+        header( "Location: index.php?page=quanlydanhmuc");
         exit;
     }
 
@@ -202,15 +203,84 @@ public function product() {
         exit;
     }
     public function add() {
-        $this->model->addToCart(1, $_GET['id'], 1); // user_id = 1
+        $this->model->addToCart($_SESSION['id'], $_GET['id'], 1); // user_id = 1
         echo "<script>
         alert('Đã thêm vào giỏ hàng!');
         window.location.href = 'index.php?page=home';
     </script>";
     }
     public function view() {
-        $items = $this->model->getCartItems(1); // user_id = 1 tạm thời
+        $items = $this->model->getCartItems($_SESSION['id']); // user_id = 1 tạm thời
         include 'views/cart.php';
+    }
+    public function deleteCartItem() {
+    session_start();
+    $user_id = $_SESSION['id'] ?? null;
+    $product_id = $_GET['product_id'] ?? null;
+
+    if ($user_id && $product_id) {
+        $model = new Database();
+        $model->deleteItem($user_id, $product_id);
+    }
+
+    // Chuyển về lại trang giỏ hàng sau khi xóa
+    header("Location: index.php?page=cart");
+    exit;
+    }
+    public function update_cart() {
+        $cartModel = new Database();
+        if (isset($_POST['quantity'])) {
+            foreach ($_POST['quantity'] as $product_id => $qty) {
+                $cartModel->updateQuantity($_SESSION['id'], $product_id, $qty);
+            }
+        }
+        header('Location: index.php?page=cart');
+        exit;
+    }
+    public function order() {
+        $cartModel = new Database();
+        $orderModel = new OrderModel();
+        $user_id = $_SESSION['id'];
+        $items = $cartModel->getCartItems($user_id);
+
+        $total = 0;
+        foreach ($items as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        $order_id = $orderModel->createOrder($user_id, $_POST['name'], $_POST['phone'], $_POST['address'], $total);
+
+        foreach ($items as $item) {
+            $orderModel->addOrderDetail($order_id, $item['product_id'], $item['quantity'], $item['price']);
+        }
+
+        $cartModel->clearCart($_SESSION['id']);
+        echo '
+            <div style="text-align: center; margin-top: 50px;">
+                <h2 style="color: green; font-size: 24px; margin-bottom: 20px;">🎉 Cảm ơn bạn đã đặt hàng!</h2>
+                <a href="index.php?page=home" 
+                style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 8px; font-size: 16px;">
+                    Quay về trang chủ
+                </a>
+            </div>
+        ';
+    }
+    public function chitiet() {
+        if (!isset($_GET['id'])) {
+            echo "Không tìm thấy sản phẩm.";
+            return;
+        }
+
+        $id = intval($_GET['id']);
+        $model = new Database();
+        $product = $model->getProductById($id);
+
+        if (!$product) {
+            echo "Sản phẩm không tồn tại.";
+            return;
+        }
+
+        include 'views/chitiet.php';
     }
 }
 ?>

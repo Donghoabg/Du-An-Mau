@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0755, true);
         }
-        $image_name = basename($_FILES['image']['name']);
+        $image_name = 'images/' . basename($_FILES['image']['name']);
         $target_path = $upload_dir . $image_name;
         move_uploaded_file($_FILES['image']['tmp_name'], $target_path);
     }
@@ -46,3 +46,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit">Lưu</button>
 </form>
 <a href="admin.php">Quay lại</a>
+<style>
+    
+    body {
+        font-family: Arial, sans-serif;
+        padding: 30px;
+        background-color: #f8f8f8;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form input[type="text"],
+    form input[type="number"],
+    form input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    form img {
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        padding: 5px;
+        background: #fff;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+

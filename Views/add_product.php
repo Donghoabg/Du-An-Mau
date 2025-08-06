@@ -2,10 +2,7 @@
 require_once 'db.php';
 
 // Kiểm tra đăng nhập qua cookie
-if (!isset($_COOKIE['username']) || !isset($_COOKIE['password'])) {
-    echo "Bạn không có quyền truy cập.";
-    exit;
-}
+
 
 $pdo = DB::connect();
 
@@ -14,10 +11,7 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? AND password = ? L
 $stmt->execute([$_COOKIE['username'], $_COOKIE['password']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$user || $user['role'] !== 'admin') {
-    echo "Bạn không có quyền truy cập.";
-    exit;
-}
+
 
 // Lấy danh sách danh mục để hiển thị trong form
 $stmt = $pdo->query("SELECT * FROM categories");
@@ -52,13 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 ?>
+<div class="form-container">
+    <h2>Thêm sản phẩm mới</h2>
+    <form method="post" enctype="multipart/form-data">
+        <label for="name">Tên:</label>
+        <input type="text" id="name" name="name" required>
 
-<h2>Thêm sản phẩm mới</h2>
-<form method="post" enctype="multipart/form-data">
-    Tên: <input type="text" name="name" required><br>
-    Giá: <input type="number" name="price" required><br>
+        <label for="price">Giá:</label>
+        <input type="number" id="price" name="price" required>
 
-    <div>
         <label for="category_id">Danh mục:</label>
         <select id="category_id" name="category_id" required>
             <option value="">-- Chọn danh mục --</option>
@@ -68,11 +64,95 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </option>
             <?php endforeach; ?>
         </select>
-    </div>
 
-    Ảnh: <input type="file" name="image" accept="image/*" required><br>
-    Mô tả: <textarea name="mota" required></textarea><br>
-    <button type="submit">Thêm</button>
-</form>
+        <label for="image">Ảnh:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
 
-<a href="admin.php">Quay lại</a>
+        <label for="mota">Mô tả:</label>
+        <textarea id="mota" name="mota" required></textarea>
+
+        <button type="submit">Thêm</button>
+    </form>
+
+    <a href="admin.php">Quay lại</a>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        height: 100vh;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        width: 450px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form label {
+        margin: 10px 0 5px;
+        font-weight: bold;
+    }
+
+    form input[type="text"],
+    form input[type="number"],
+    form input[type="file"],
+    form select,
+    form textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    form textarea {
+        resize: vertical;
+        height: 100px;
+    }
+
+    button {
+        padding: 12px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    a {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+

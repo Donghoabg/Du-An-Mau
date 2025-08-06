@@ -18,15 +18,37 @@ class Database{
     }
     
 
-    public function RegisterModel($username, $password) {
-    $role = 'user';
-    $sql = "INSERT INTO users (username, `password`, role) VALUES (:username, :password, :role)";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->bindParam(":username", $username);
-    $stmt->bindParam(":password", $password);
-    $stmt->bindParam(":role", $role);
-    return $stmt->execute();
+     public function isDuplicate($email, $phone)
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ? OR phone = ?");
+        $stmt->execute([$email, $phone]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    // thêm người dùng mới
+    public function register($username, $password, $email, $phone)
+{
+    try {
+        $stmt = $this->pdo->prepare("INSERT INTO users (username, password, email, phone) VALUES (?, ?, ?, ?)");
+        $stmt->execute([
+            $username,
+            password_hash($password, PASSWORD_DEFAULT),
+            $email,
+            $phone
+        ]);
+        
+        // Trả về ID vừa thêm
+        return $this->pdo->lastInsertId();
+    } catch (PDOException $e) {
+        if ($e->getCode() == 23000) {
+            // Duplicate entry
+            return false;
+        }
+        throw $e;
+    }
 }
+
+
     
 
     public function CheckUserExists($username) {

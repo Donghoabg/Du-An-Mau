@@ -1,8 +1,8 @@
 
 
 
-<link rel="stylesheet" href="Views/css.css?v=2">
-<link rel="stylesheet" href="Views/chitiet.css?v=31"> <!-- mới -->
+<link rel="stylesheet" href="Views/css.css?v=1">
+<link rel="stylesheet" href="Views/chitiet.css?v=3"> <!-- mới -->
 
 <div class="vien">
     <header>
@@ -63,8 +63,8 @@
             <h2 class="chitiet-brand">Thương hiệu: <a href="#">Innstyle</a></h2>
             <h1 class="chitiet-name"><?= $product['name'] ?></h1>
 
-            <div class="chitiet-price-box">
-                <div class="chitiet-old-price"><?=$product['price']?></div>
+            <div class="giamoii">
+                <div class="giamoii"><?= number_format($product['price'])?> đ</div>
             </div>
 
             <div class="chitiet-color-select">

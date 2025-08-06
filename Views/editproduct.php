@@ -11,7 +11,7 @@
         <input type="number" name="id" value="<?=$EditProduct['id']?>"><br>
         <label for="">Sản Phẩm</label><br>
         <input type="text" name="name" value="<?=$EditProduct['name']?>"><br>
-        <label for="">Giá</label><br>
+        <label for="">Giáa</label><br>
         <input type="number" name="gia" value="<?=$EditProduct['giamoi']?>"><br>
         <label for="">Mô tả</label><br>
         <input type="text" name="mota" value="<?=$EditProduct['mota']?>"><br>

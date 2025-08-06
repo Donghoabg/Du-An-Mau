@@ -29,8 +29,7 @@
 </style>
 <link rel="stylesheet" href="Views/css.css?v=1">
 <link rel="stylesheet" href="Views/products.css?v=3">
-<?php
-?>
+
 <div class="vien">
     <header>
         <div class="username">
@@ -184,6 +183,14 @@
             <img src="images/22.jpg" alt="">
             <img src="images/20.png" alt="">
         </div>
+            <?php
+            if(isset($_SESSION['id'])){
+                echo $_SESSION['id'];
+            }else{
+                echo "ooooooooooooooooooooooooo";
+            }
+            
+            ?>
         <div class="vuacohang">
             <h3>SẢN PHẨM</h3>
         </div>

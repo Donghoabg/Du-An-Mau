@@ -13,7 +13,7 @@ class OrderController {
             $id = intval($_GET['id']);
             $model = new OrderModel();
             $model->deleteOrder($id);
-              header("Location: Views/admin_order.php");
+              header("Location: Views/admin_orders.php");
             exit;
         }
     }

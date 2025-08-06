@@ -4,36 +4,21 @@ class ProductController {
     
 
     public function ControllerGuest() {
+        $model = new Database();
+        $productss = $model->getSaleProducts();
+
+        $limit = 10;
+        $page = isset($_GET['p']) ? (int)$_GET['p'] : 1;
+        if ($page < 1) $page = 1;
+        $offset = ($page - 1) * $limit;
+        $products = $model->getProducts($limit, $offset);
+        $total = $model->getTotalProducts();
+        $totalPages = ceil($total / $limit);
         include 'Views/Guest.php';
+        exit;
     }
 
-    public function ControllerRegister() {
-    $error = "";
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $username = trim($_POST["username"]);
-        $password = $_POST["password"];
-        $confirm = $_POST["confirm_password"];
-        $db = new Database();
-
-        // Kiểm tra điều kiện đầu vào
-        if (!preg_match("/[a-zA-Z]/", $username)) {
-            $error = "Tên phải có ít nhất 1 chữ cái.";
-        } elseif (strlen($password) < 4) {
-            $error = "Mật khẩu phải có ít nhất 4 ký tự.";
-        } elseif ($password !== $confirm) {
-            $error = "Mật khẩu nhập lại không khớp.";
-        } elseif ($db->CheckUserExists($username)) {
-            $error = "Tài khoản đã tồn tại.";
-        } else {
-            $db->RegisterModel($username, $password);
-            header("Location: index.php?page=login");
-            exit;
-        }
-    }
-
-    include 'Views/Register.php';
-    }
+    
 
 
 
@@ -210,7 +195,7 @@ public function product() {
     </script>";
     }
     public function view() {
-        $items = $this->model->getCartItems($_SESSION['id']); // user_id = 1 tạm thời
+        $items = $this->model->getCartItems($_SESSION['id']); 
         include 'views/cart.php';
     }
     public function deleteCartItem() {

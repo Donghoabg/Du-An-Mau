@@ -1,8 +1,12 @@
 <?php
 session_start();
+require_once 'Model.php';
+require_once 'controllers/Login.php';
 require_once 'controllers/ProductController.php';
 require_once 'controllers/UserController.php';
 require_once 'controllers/OrderController.php';
+$database = new Database();
+$login = new RegisterController($database);
 $orderController = new OrderController();
 $controller = new ProductController();
 $ctrl = new UserController();
@@ -46,7 +50,8 @@ switch ($action) {
         $controller->ControllerGuest();
         break;
     case 'register':
-        $controller->ControllerRegister();
+        
+        $login->register();
         break;
     case 'login':
         $controller->ControllerLogin();

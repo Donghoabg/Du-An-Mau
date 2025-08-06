@@ -42,5 +42,6 @@ $products = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll(PDO
         </tbody>
     </table>
 
-    <a class="btn btn-outline-secondary mt-3" href="index.php?page=guest">Quay lại trang chủ</a>
+    <a class="btn btn-outline-danger mt-3" href="logout.php">Thoát</a>
+
 </div>

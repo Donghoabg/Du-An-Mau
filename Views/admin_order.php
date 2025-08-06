@@ -35,7 +35,7 @@
                     <td><?= number_format($o['total_amount']) ?>đ</td>
                     <td><?= $o['order_date'] ?></td>
                     <td>
-                        <a href="index.php?page=deletee&id=<?= $o['id'] ?>" 
+                        <a href="../index.php?page=deletee&id=<?= $o['id'] ?>" 
                         onclick="return confirm('Bạn có chắc muốn xóa đơn hàng này không?')"
                         style="color:red;">Xóa</a>
                     </td>
